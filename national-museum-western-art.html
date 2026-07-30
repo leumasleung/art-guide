@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>國立西洋美術館 - 14-16世紀名畫語音導覽</title>
     <style>
-        :root {
+        :root {丑
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --primary-color: #2c3e50;
@@ -304,7 +304,7 @@
             synth.cancel();
 
             const utterance = new SpeechSynthesisUtterance(`${title}。${text}`);
-            utterance.lang = 'zh-TW'; // 設定語系為中文
+            utterance.lang = 'zh-HK'; // 設定語系為中文
             utterance.rate = 0.95;    // 語速稍微放慢，增加質感
 
             utterance.onstart = () => {
