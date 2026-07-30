@@ -1324,46 +1324,46 @@
         }
 
         // 2. 智慧搜尋：iOS Apple 最佳語音/系統預設 -> Android/Windows Google 粵語 -> 備用
-function getBestCantoneseVoice() {
-    if (availableVoices.length === 0 && 'speechSynthesis' in window) {
-        availableVoices = synth.getVoices();
-    }
-
-    if (availableVoices.length === 0) return null;
-
-    // 篩選所有廣東話語音 (zh-HK, zh-GZ, yue)
-    const cantoneseVoices = availableVoices.filter(v => {
-        const lang = v.lang.toLowerCase().replace('_', '-');
-        return lang.includes('zh-hk') || lang.includes('zh-gz') || lang.includes('yue');
-    });
-
-    if (cantoneseVoices.length === 0) return null;
-
-    // 【優先 1】iOS Apple 高音質 / Siri / 增強版 / 善知 語音
-    const appleHighQuality = cantoneseVoices.find(v => {
-        const name = v.name.toLowerCase();
-        return name.includes('enhanced') || 
-               name.includes('premium') || 
-               name.includes('siri') || 
-               name.includes('sin-ji') || 
-               name.includes('sinji');
-    });
-    if (appleHighQuality) return appleHighQuality;
-
-    // 【優先 2】使用者喺 iPhone / 系統設定選用嘅「預設語音」 (System Default)
-    const systemDefault = cantoneseVoices.find(v => v.default === true);
-    if (systemDefault) return systemDefault;
-
-    // 【優先 3】Android / Windows Google 廣東話 (Google 粵語)
-    const googleVoice = cantoneseVoices.find(v => {
-        const name = v.name.toLowerCase();
-        return name.includes('google') || name.includes('粵語');
-    });
-    if (googleVoice) return googleVoice;
-
-    // 【優先 4】備用：第一個搜尋到的廣東話 Voice
-    return cantoneseVoices[0];
-}
+        function getBestCantoneseVoice() {
+            if (availableVoices.length === 0 && 'speechSynthesis' in window) {
+                availableVoices = synth.getVoices();
+            }
+        
+            if (availableVoices.length === 0) return null;
+        
+            // 篩選所有廣東話語音 (zh-HK, zh-GZ, yue)
+            const cantoneseVoices = availableVoices.filter(v => {
+                const lang = v.lang.toLowerCase().replace('_', '-');
+                return lang.includes('zh-hk') || lang.includes('zh-gz') || lang.includes('yue');
+            });
+        
+            if (cantoneseVoices.length === 0) return null;
+        
+            // 【優先 1】iOS Apple 高音質 / Siri / 增強版 / 善知 語音
+            const appleHighQuality = cantoneseVoices.find(v => {
+                const name = v.name.toLowerCase();
+                return name.includes('enhanced') || 
+                       name.includes('premium') || 
+                       name.includes('siri') || 
+                       name.includes('sin-ji') || 
+                       name.includes('sinji');
+            });
+            if (appleHighQuality) return appleHighQuality;
+        
+            // 【優先 2】使用者喺 iPhone / 系統設定選用嘅「預設語音」 (System Default)
+            const systemDefault = cantoneseVoices.find(v => v.default === true);
+            if (systemDefault) return systemDefault;
+        
+            // 【優先 3】Android / Windows Google 廣東話 (Google 粵語)
+            const googleVoice = cantoneseVoices.find(v => {
+                const name = v.name.toLowerCase();
+                return name.includes('google') || name.includes('粵語');
+            });
+            if (googleVoice) return googleVoice;
+        
+            // 【優先 4】備用：第一個搜尋到的廣東話 Voice
+            return cantoneseVoices[0];
+        }
 
         // 3. 語音播放核心 Logic
         function playCantonese(id, title, bio, story, guide) {
