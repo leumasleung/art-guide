@@ -305,7 +305,7 @@
 
             const utterance = new SpeechSynthesisUtterance(`${title}。${text}`);
             utterance.lang = 'zh-HK'; // 設定語系為中文
-            utterance.rate = 0.95;    // 語速稍微放慢，增加質感
+            utterance.rate = 0.85;    // 語速稍微放慢，增加質感
 
             utterance.onstart = () => {
                 statusEl.innerText = `正在播放：${title}`;
