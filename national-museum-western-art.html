@@ -490,7 +490,7 @@
 
             const utterance = new SpeechSynthesisUtterance(`${title}。${text}`);
             utterance.lang = 'zh-HK'; // 指定廣東話 / 香港粵語
-            utterance.rate = 0.92;    // 調校自然語速
+            utterance.rate = 0.7;    // 調校自然語速
 
             // 優先選用系統廣東話 Voice (如 Siri 粵語 / Google 粵語)
             const voices = synth.getVoices();
