@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>國立西洋美術館 - 14-16世紀名畫廣東話語音導覽</title>
+    <title>東京國立西洋美術館 59件 Highlight 廣東話語音導賞</title>
     <style>
         :root {
-            --bg-color: #f4f6f8;
+            --bg-color: #f4f6f9;
             --card-bg: #ffffff;
             --primary-color: #1a252f;
             --accent-color: #c0392b;
@@ -26,30 +26,30 @@
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            padding-bottom: 90px;
+            padding-bottom: 100px;
         }
 
         header {
             background-color: var(--primary-color);
             color: white;
             text-align: center;
-            padding: 20px 16px 15px 16px;
+            padding: 24px 16px 18px 16px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             letter-spacing: 0.5px;
         }
 
         header p {
             margin: 6px 0 0 0;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             opacity: 0.85;
         }
 
-        /* 頂部搜尋與快速選擇工具列 (Sticky Navigation Bar) */
+        /* 頂部固定過濾與導航工具列 (Sticky Navigation Bar) */
         .sticky-tools {
             position: sticky;
             top: 0;
@@ -68,25 +68,25 @@
             gap: 10px;
         }
 
-        .search-input, .select-jump {
+        .tool-select, .search-input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 10px 12px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             outline: none;
             background-color: #f8fafc;
             transition: all 0.2s ease;
         }
 
-        .search-input:focus, .select-jump:focus {
+        .tool-select:focus, .search-input:focus {
             border-color: var(--highlight-color);
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.15);
         }
 
         .container {
-            max-width: 680px;
+            max-width: 720px;
             margin: 0 auto;
             padding: 16px;
         }
@@ -98,12 +98,7 @@
             margin-bottom: 24px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             border: 1px solid var(--border-color);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            scroll-margin-top: 130px; /* 捲動時預留頂部工具列空間 */
-        }
-
-        .artwork-card:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            scroll-margin-top: 170px;
         }
 
         .card-header {
@@ -113,51 +108,111 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
-        .badge {
+        .badge-id {
             background-color: var(--primary-color);
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: bold;
             padding: 4px 8px;
             border-radius: 4px;
         }
 
-        .artist-name {
-            font-size: 0.85rem;
-            color: var(--accent-color);
+        .zone-tag {
+            font-size: 0.78rem;
+            color: var(--highlight-color);
             font-weight: 600;
+        }
+
+        .year-tag {
+            font-size: 0.78rem;
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #475569;
+        }
+
+        /* 預留圖片容器 (Reserved Image Container) */
+        .img-container {
+            width: 100%;
+            background-color: #edf2f7;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .img-container img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .img-placeholder {
+            padding: 30px 16px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border: 2px dashed #cbd5e1;
+            margin: 12px;
+            border-radius: 8px;
+            background-color: #f8fafc;
         }
 
         .card-body {
             padding: 18px 16px;
         }
 
+        .artist-title {
+            font-size: 0.88rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
         .title-zh {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin: 0 0 4px 0;
             color: var(--primary-color);
         }
 
         .title-en {
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             font-style: italic;
         }
 
-        .section-box {
-            margin-bottom: 12px;
+        .details-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             font-size: 0.92rem;
             line-height: 1.6;
         }
 
-        .section-label {
+        .detail-item {
+            background-color: #f8fafc;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--highlight-color);
+        }
+
+        .detail-item.story-item {
+            border-left-color: #e67e22;
+        }
+
+        .detail-item.impact-item {
+            border-left-color: #27ae60;
+        }
+
+        .detail-label {
             font-weight: bold;
-            color: var(--highlight-color);
+            color: var(--primary-color);
+            display: block;
             margin-bottom: 2px;
-            display: inline-block;
+            font-size: 0.85rem;
         }
 
         .controls {
@@ -178,7 +233,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            text-decoration: none;
             transition: background-color 0.2s ease;
         }
 
@@ -191,17 +245,7 @@
             background-color: #a93226;
         }
 
-        .btn-link {
-            background-color: #edf2f7;
-            color: #4a5568;
-            border: 1px solid #cbd5e1;
-        }
-
-        .btn-link:hover {
-            background-color: #e2e8f0;
-        }
-
-        /* 底部固定語音播放列 */
+        /* 底部固定語音控制列 */
         .player-bar {
             position: fixed;
             bottom: 0;
@@ -248,29 +292,45 @@
 <body>
 
     <header>
-        <h1>國立西洋美術館語音導覽 (廣東話)</h1>
-        <p>14 – 16 世紀：後哥德 / 文藝復興 / 風格主義</p>
+        <h1>東京國立西洋美術館 NMWA</h1>
+        <p>59 件 Highlight 經典典藏觀賞導覽 (廣東話語音版)</p>
     </header>
 
-    <!-- 搜尋與快速跳轉選擇列 -->
+    <!-- 頂部搜尋、展區 Filter 與作品跳轉選擇列 -->
     <div class="sticky-tools">
         <div class="tools-row">
-            <select id="quickJumpSelect" class="select-jump" onchange="jumpToArtwork(this.value)">
-                <option value="">🎯 快速跳轉作品 (Select Artwork Title)...</option>
-                <!-- 由 JavaScript 自動動態生成選項 -->
+            <!-- 展區 Filter (Requirement 1) -->
+            <select id="zoneFilter" class="tool-select" onchange="filterArtworks()">
+                <option value="ALL">🏛️ 所有展區 (全館 59 件作品)</option>
+                <option value="ZONE1">展區一：戶外前庭與19世紀大廳 (01 - 05)</option>
+                <option value="ZONE2">展區二：本館 2樓 哥特晚期/文藝復興/矯飾主義 (06 - 15)</option>
+                <option value="ZONE3">展區三：本館 2樓 17世紀巴洛克與北方寫實主義 (16 - 26)</option>
+                <option value="ZONE4">展區四：本館 2樓 18世紀羅可可與啟蒙時代 (27 - 34)</option>
+                <option value="ZONE5">展區五：新館 19世紀浪漫主義/寫實主義/印象派前夕 (35 - 41)</option>
+                <option value="ZONE6">展區六：新館 19世紀末-20世紀初 印象派/後印象派/前衛 (42 - 54)</option>
+                <option value="ZONE7">展區七：新館 20世紀二次大戰後戰後現代藝術 (55 - 59)</option>
             </select>
         </div>
+
         <div class="tools-row">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 搜尋作品名稱、英文 Title 或畫家..." oninput="filterArtworks()">
+            <!-- 作品跳轉下拉選單 -->
+            <select id="quickJumpSelect" class="tool-select" onchange="jumpToArtwork(this.value)">
+                <option value="">🎯 快速跳轉作品 (01 - 59)...</option>
+            </select>
+        </div>
+
+        <div class="tools-row">
+            <!-- 關鍵字搜尋 -->
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 搜尋作品名稱、英文 Title 或藝術家..." oninput="filterArtworks()">
         </div>
     </div>
 
     <div class="container" id="artwork-list">
-        <!-- 畫作卡片將由 JavaScript 自動生成 -->
+        <!-- 59件作品卡片由 JavaScript 自動繪製 -->
     </div>
 
     <div id="noResults" class="no-results">
-        查無符合條件嘅畫作，請嘗試重新搜尋。
+        無符合條件嘅作品，請嘗試重新搜尋或切換展區。
     </div>
 
     <!-- 底部固定語音控制列 -->
@@ -280,166 +340,1050 @@
     </div>
 
     <script>
-        // 完整 10 幅畫作資料庫 (含中文、英文 Title、專屬廣東話導賞詞與官方連結)
+        // 59件 Highlight 作品完整資料庫 (包含第二部分解析與圖片 URL 預留位置)
         const artworks = [
+            // --- 展區一 ---
             {
-                id: 1,
-                titleZh: "基督升天與空寶座聖像畫",
+                id: "01",
+                zoneKey: "ZONE1",
+                zoneName: "展區一：戶外前庭與19世紀大廳",
+                year: "1880–90/1917",
+                artist: "奧古斯特·羅丹 (Auguste Rodin)",
+                titleZh: "《地獄之門》",
+                titleEn: "The Gates of Hell",
+                imgUrl: "", // RESERVED PLACEHOLDER: 請在此填入圖片 URL
+                bio: "奧古斯特·羅丹（1840–1917），被譽為「現代雕塑之父」，打破傳統學院派僵硬造型，將人類情緒與心理張力融入青銅。",
+                tech: "青銅鑄造。採用高浮雕與立體雕塑組合，表面保留泥塑手痕，創造極具光影對比與戲劇張力嘅質感。",
+                status: "現代雕塑史上的里程碑巨作，開啟咗現代雕塑表現心理同人性困境嘅先河。",
+                story: "應法國裝飾藝術博物館之邀，以但丁《神曲·地獄篇》為靈感，羅丹傾注半生心血，雖然至死未完全完工，卻衍生出《沉思者》、《吻》等名作。",
+                prior: "受米開朗基羅《最後的審判》與吉貝爾蒂佛羅倫斯洗禮堂《天堂之門》嘅深刻啟發。",
+                later: "直接孕育咗布德爾、馬約爾等後世現代雕塑家，奠定20世紀表現主義雕塑根基。"
+            },
+            {
+                id: "02",
+                zoneKey: "ZONE1",
+                zoneName: "展區一：戶外前庭與19世紀大廳",
+                year: "1881–82 / 放大版 1902–03",
+                artist: "奧古斯特·羅丹 (Auguste Rodin)",
+                titleZh: "《沉思者（放大版）》",
+                titleEn: "The Thinker (Enlarged)",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "現代雕塑之父羅丹最知名嘅單體雕塑代表作。",
+                tech: "青銅鑄造。寫實嘅肌肉結構同繃緊嘅軀幹動態，展現靜止中蘊含極致動力的心理狀態。",
+                status: "西方視覺藝術中最具代表性同認知度嘅思考者符號。",
+                story: "原為《地獄之門》門楣中央嘅但丁形象，俯瞰地獄罪人並沉思人類命運；後獨立放大成單體雕塑，成為人類哲理思考嘅象徵。",
+                prior: "承襲米開朗基羅《伊利亞》與古希臘《英雄軀幹》（Belvedere Torso）強健嘅人體造型。",
+                later: "將「思考過程」轉化為全身肌肉緊繃嘅視覺語言，深刻影響20世紀表現主義雕塑。"
+            },
+            {
+                id: "03",
+                zoneKey: "ZONE1",
+                zoneName: "展區一：戶外前庭與19世紀大廳",
+                year: "1884–88",
+                artist: "奧古斯特·羅丹 (Auguste Rodin)",
+                titleZh: "《加萊市民》",
+                titleEn: "Burghers of Calais",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "羅丹打破傳統英雄崇拜紀念碑風格嘅震撼巨作。",
+                tech: "去英雄化嘅群像布局，放棄傳統高台座，將六位市民與觀眾置於同一地平線，強調個體內心嘅恐懼與悲壯。",
+                status: "紀念碑雕塑革新的經典，打破傳統紀念碑嘅盲目崇高感。",
+                story: "記錄英法百年戰爭期間，加萊六位尊貴市民為了保全全城百姓，自願身穿囚服、頸繫繩索向英王獻城赴死嘅歷史故事。",
+                prior: "借鑑中世紀哥特式雕塑嘅悲劇情緒與多納泰羅嘅寫實人物塑造。",
+                later: "開創咗現代公共藝術強調心理共鳴與互動性嘅新紀元。"
+            },
+            {
+                id: "04",
+                zoneKey: "ZONE1",
+                zoneName: "展區一：戶外前庭與19世紀大廳",
+                year: "1909",
+                artist: "埃米爾-安東尼·布德爾 (Émile-Antoine Bourdelle)",
+                titleZh: "《弓箭手赫拉克勒斯》",
+                titleEn: "Hercules the Archer",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "埃米爾-安東尼·布德爾（1861–1929），羅丹的大弟子與助手，現代建築性雕塑大師。",
+                tech: "極具幾何力感與對角線張力嘅張弓姿態，將人體張力結合建築結構美學。",
+                status: "新古典主義與現代幾何構成主義交匯嘅代表作。",
+                story: "取材自希臘神話赫拉克勒斯射殺斯廷法利斯神鳥嘅英雄事跡，塑造出蓄勢待發嘅極致力量感。",
+                prior: "受古希臘古風時期雕塑與亞述浮雕幾何線條嘅影響。",
+                later: "啟發咗阿爾基彭科（Archipenko）等現代幾何與構成主義雕塑家。"
+            },
+            {
+                id: "05",
+                zoneKey: "ZONE1",
+                zoneName: "展區一：戶外前庭與19世紀大廳",
+                year: "1857–58",
+                artist: "讓-巴蒂斯特·卡爾波 (Jean-Baptiste Carpeaux)",
+                titleZh: "《那不勒斯漁童》",
+                titleEn: "The Neapolitan Fisherboy",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "讓-巴蒂斯特·卡爾波（1827–1875），法國第二帝國時期最著名雕塑家，連繫新古典主義與寫實主義。",
+                tech: "活潑生動嘅青銅鑄造，精細刻畫漁童聆聽海螺發出聲音嘅細微面部表情，充滿自然主義動態。",
+                status: "19世紀風俗雕塑（Genre sculpture）嘅傑作，帶入濃厚地中海風土生活氣息。",
+                story: "卡爾波喺義大利留學期間觀察地中海沿岸兒童嘅生活，捕獲咗漁童天真無邪嘅瞬間。",
+                prior: "受羅馬古典藝術與浪漫主義對異域浪漫情調熱愛嘅影響。",
+                later: "直接啟發咗羅丹早期嘅生命張力表現與印象派雕塑捕捉瞬時動態嘅理念。"
+            },
+
+            // --- 展區二 ---
+            {
+                id: "06",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "1408",
+                artist: "瑪里奧托·迪·納爾多 (Mariotto di Nardo)",
+                titleZh: "《聖史蒂芬傳奇祭壇畫座板》",
+                titleEn: "Predella Panel: Legend of St. Stephen",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "瑪里奧托·迪·納爾多（活躍於 1394–1424），佛羅倫斯晚期哥特式畫家。",
+                tech: "木板蛋彩畫（Tempera on panel），金箔背景，連環畫式嘅平面敘事構圖。",
+                status: "展示咗國際哥特式向早期文藝復興過渡期嘅敘事畫特色。",
+                story: "描繪基督教首位殉道者聖史蒂芬（St. Stephen）被石刑及遺體奇蹟發現嘅傳奇聖蹟。",
+                prior: "受喬托（Giotto）與佛羅倫斯傳統繪畫筆法嘅影響。",
+                later: "為早期文藝復興（如安傑利科修道士）嘅空間與故事連續性鋪平咗道路。"
+            },
+            {
+                id: "07",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "c. 1422",
+                artist: "安德烈亞斯·里佐斯 (Andreas Ritzos)",
+                titleZh: "《基督升天與預備寶座聖像畫》",
                 titleEn: "Icon: Ascension of Christ with the Hetoimasia",
-                artist: "安德烈亞斯·里佐斯 (Andreas Ritzos, 約 1422–?)",
-                bg: "15世紀出名嘅克里特-威尼斯派聖像畫大師，完美融合咗拜占庭宮廷傳統同威尼斯藝術風格。",
-                story: "畫作中央描繪基督升天同象徵上帝嘅「空寶座」，最上方係亞伯拉罕嘅盛宴。右下方聖塞巴斯蒂安腳下有希臘文親筆簽名「由安德烈亞斯·里佐斯之手所作」。此畫原為西洋美術館靈魂人物松方幸次郎嘅舊藏。",
-                impact: "拜占庭晚期藝術嘅極致代表作，亦係里佐斯現存保存得最完好、最有代表性嘅大型聖像畫之一。",
-                url: "https://www.nmwa.go.jp/en/collection/1973-0004.html",
-                cantoneseAudio: "呢幅係15世紀聖像畫大師里佐斯嘅代表作《基督升天與空寶座聖像畫》。畫作中央描繪基督升天同象徵上帝嘅空寶座。右下方仲有畫家嘅希臘文親筆簽名，係拜占庭晚期藝術保存得最完美嘅珍品。"
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "安德烈亞斯·里佐斯，克里特學派（Cretan School）著名拜占庭聖像畫師。",
+                tech: "拜占庭式木板蛋彩畫，嚴格嘅神聖符號學與金底貼箔，對稱神聖構圖。",
+                status: "15世紀東正教拜占庭藝術與西方文藝復興交會嘅代表。",
+                story: "上方描繪基督升天，下方描繪末日審判中為基督預留嘅空寶座（Hetoimasia）。右下有希臘文親筆簽名。",
+                prior: "傳承古拜占庭帝國宮廷與教會聖像畫製作規範。",
+                later: "影響咗威尼斯地區嘅後拜占庭繪畫，亦為埃爾·格列柯（El Greco）提供咗視覺養分。"
             },
             {
-                id: 2,
-                titleZh: "聖斯德望傳奇圖祭壇座畫",
-                titleEn: "Predella Panel Representing the Legend of St. Stephen",
-                artist: "馬里奧托·迪·納爾多 (Mariotto di Nardo, 活動於 1394–1424 年)",
-                bg: "14世紀末至15世紀初活躍於佛羅倫斯嘅哥德晚期畫家。",
-                story: "呢幅畫原本安裝喺大型三聯祭壇畫嘅底座，後來祭壇畫被拆解並流散世界各地。畫面好似連環畫咁，描繪基督教第一位殉道者聖斯德望嘅生平，以及運送遺體時惡魔掀起大海風浪嘅傳奇故事。",
-                impact: "展現咗義大利中世紀晚期充滿想像力同鮮豔蛋彩（Tempera）色彩嘅敘事繪畫風格。",
-                url: "https://www.nmwa.go.jp/en/collection/1993-0003.html",
-                cantoneseAudio: "呢幅作品描繪基督教首位殉道者聖斯德望嘅傳奇故事。畫面好似長卷連環畫咁，講述聖人嘅生平同遺體運送時惡魔攪動大海嘅情節，呈現出哥德晚期極具想像力同鮮豔嘅蛋彩畫風格。"
+                id: "08",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "c. 1485–1540",
+                artist: "約斯·凡·克萊夫 (Joos van Cleve)",
+                titleZh: "《基督受難與跪拜捐贈者夫婦三聯畫》",
+                titleEn: "Triptych: The Crucifixion Flanked by the Kneeling Donor...",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "約斯·凡·克萊夫，安特衛普學派早期法蘭德斯大師。",
+                tech: "木板油畫，精細嘅北方寫實油畫技法，對布料細節與遠景大氣遠視法刻畫極深。",
+                status: "北方文藝復興祭壇畫嘅典型代表。",
+                story: "中央板描繪基督受難，兩側翼板描繪資助此畫嘅捐贈者夫婦及其主保聖人。",
+                prior: "繼承揚·凡·艾克（Jan van Eyck）與羅吉爾·凡·德爾·維登嘅油畫光影傳統。",
+                later: "將北方細節與義大利人文主義構圖融合，推動咗北方文藝復興肖像與宗教畫發展。"
             },
             {
-                id: 3,
-                titleZh: "基督受難與跪拜的贊助者夫婦三聯畫",
-                titleEn: "Triptych: The Crucifixion Flanked by the Kneeling Donor and His Wife",
-                artist: "尤斯·凡·克萊夫 (Joos van Cleve, 約 1485–1540/41)",
-                bg: "安特衛普畫派代表人物，以精湛嘅油畫技法同結合北方佛蘭德斯與義大利文藝復興風格而出名。",
-                story: "三聯畫形式喺當時多用於私人祈禱。畫面兩翼細緻描繪咗出資贊助製作呢幅畫嘅夫婦，表達佢哋虔誠嘅信仰。",
-                impact: "北方文藝復興細膩油畫技術嘅典範，對布料質感、人物細節同背景風景都有極嚴謹嘅刻畫。",
-                url: "https://www.nmwa.go.jp/en/collection/1977-0002.html",
-                cantoneseAudio: "呢幅三聯畫係北方文藝復興細膩油畫嘅典範。畫作左右兩邊細緻咁畫咗資助訂製呢幅畫嘅贊助者夫婦，展現咗畫家對衣物質感、人物面部細節同遠方風景嘅精湛刻畫。"
+                id: "09",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "c. 1518",
+                artist: "老盧卡斯·克拉納赫 (Lucas Cranach, the Elder)",
+                titleZh: "《客西馬尼園的祈禱》",
+                titleEn: "The Garden of Gethsemane",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "老盧卡斯·克拉納赫（1472–1553），德意志文藝復興重要畫家，馬丁路德的好友。",
+                tech: "木板油畫，結合細膩嘅線條、戲劇性嘅夜間光影與北方自然風景。",
+                status: "德意志文藝復興宗教改革前夕嘅經典代表。",
+                story: "耶穌喺被捕前夜於客西馬尼園極度痛苦地禱告，門徒喺旁沉睡，遠處猶大帶著兵丁靠近。",
+                prior: "受到丟勒（Albrecht Dürer）木刻版畫與多瑙河學派風景畫嘅深刻影響。",
+                later: "奠定咗北方宗教畫中將情感融入神秘自然夜景嘅傳統。"
             },
             {
-                id: 4,
-                titleZh: "客西馬尼園的禱告",
-                titleEn: "The Garden of Gethsemane (Cranach)",
-                artist: "老盧卡斯·克拉納赫 (Lucas Cranach, the Elder, 1472–1553)",
-                bg: "德意志文藝復興宮廷畫師，亦係宗教改革家馬丁路德嘅好友，北方文藝復興巨匠。",
-                story: "描繪耶穌喺被捕前夕於客西馬尼園進行最後禱告嘅場景。克拉納赫非常擅長將戲劇性嘅宗教情節融進德國特有嘅黑森林風景之中。",
-                impact: "展現北方文藝復興獨特嘅線條風格，以及用自然風景烘托情感（Pathos）嘅高超手法。",
-                url: "https://www.nmwa.go.jp/en/collection/1997-0001.html",
-                cantoneseAudio: "呢幅畫由馬丁路德嘅好友老盧卡斯·克拉納赫所作，描繪耶穌喺被捕前夕嘅最後禱告。畫家將戲劇性嘅宗教情節融入德國黑森林風景，用獨特嘅線條感烘托出莊嚴同悲壯嘅氣氛。"
-            },
-            {
-                id: 5,
-                titleZh: "聖凱瑟琳的神秘婚禮",
+                id: "10",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "c. 1547",
+                artist: "保羅·委羅內塞 (Paolo Veronese)",
+                titleZh: "《聖凱瑟琳的神秘婚禮》",
                 titleEn: "The Mystic Marriage of St. Catherine",
-                artist: "保羅·委羅內塞 (Paolo Veronese, 1528–1588)",
-                bg: "威尼斯畫派三傑之一，以華麗色彩、宏大構圖同奢華衣飾繪畫而聞名於世。",
-                story: "呢幅係佢早期嘅作品。畫作左上方隱藏咗結合「塔」同「松樹」嘅貴族徽章，推測係為咗紀念1547年維羅納兩大名門聯姻而訂製嘅紀念禮物。",
-                impact: "聖凱瑟琳被視為聰慧與虔誠嘅女性典範，作品充分體現威尼斯畫派喺光影同豐富色彩運用上嘅卓越成就。",
-                url: "https://www.nmwa.go.jp/en/collection/1994-0001.html",
-                cantoneseAudio: "威尼斯畫派大師委羅內塞嘅作品《聖凱瑟琳的神秘婚禮》。畫作左上方隱藏咗貴族徽章，據說係為咗慶祝1547年兩大名門聯姻而繪製，展示咗威尼斯畫派極致華麗嘅色彩與光影變化。"
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "保羅·委羅內塞（1528–1588），威尼斯畫派三傑之一，色彩與宏大場面大師。",
+                tech: "帆布油畫，極其富麗堂皇嘅色彩對比、流暢嘅衣褶與威尼斯式光影。",
+                status: "威尼斯文藝復興盛期向矯飾主義過渡嘅色彩典範。",
+                story: "亞歷山大的聖凱瑟琳喺異象中與童年基督訂立靈性婚約，左上方有貴族聯姻徽章。",
+                prior: "受提香（Titian）嘅色彩學與柯雷喬（Correggio）優雅造型嘅影響。",
+                later: "深刻影響咗17世紀巴洛克大師魯本斯以及18世紀羅可可畫派嘅色彩揮灑。"
             },
             {
-                id: 6,
-                titleZh: "扮成大衛的青年肖像",
+                id: "11",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "c. 1555–60",
+                artist: "丁托列托 (Tintoretto)",
+                titleZh: "《化身為大衛的青年肖像》",
                 titleEn: "Portrait of a Young Man as David",
-                artist: "丁托列托 (Tintoretto, 1518–1594)",
-                bg: "威尼斯畫派大師，以強烈嘅明暗對比（Chiaroscuro）同動感透視角度著稱。",
-                story: "畫中青年化身為聖經英雄大衛，左後方可以看到被斬首嘅巨人歌利亞同潰敗嘅軍隊。著名藝術史學家肯尼斯·克拉克爵士曾盛讚其背景筆觸「充滿躍動感」。",
-                impact: "將傳統肖像畫與歷史及聖經故事結合，係風格主義（Mannerism）嘅典型傑作。",
-                url: "https://www.nmwa.go.jp/en/collection/1971-0002.html",
-                cantoneseAudio: "呢幅作品由丁托列托所畫，將年輕人化身為聖經英雄大衛，背景仲可以睇到被擊敗嘅巨人歌利亞。畫家運用強烈嘅明暗對比同充滿動感嘅筆觸，係風格主義肖像畫嘅經典。"
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "丁托列托（1518–1594），威尼斯畫派大師，以劇烈光影與動態構圖著稱。",
+                tech: "帆布油畫，強烈嘅明暗對照法（Chiaroscuro），筆觸飛動且充滿心理張力。",
+                status: "矯飾主義肖像畫嘅代表，將聖經英雄意象融入貴族青年肖像。",
+                story: "年輕貴族男子手持巨人歌利亞嘅首級與投石繩，將自身理想化為聖經英雄大衛。",
+                prior: "宗法「提香的色彩與米開朗基羅的素描」。",
+                later: "其劇烈光影直接啟發咗卡拉瓦喬與巴洛克時代嘅戲劇性光影。"
             },
             {
-                id: 7,
-                titleZh: "客西馬尼園的禱告",
-                titleEn: "The Garden of Gethsemane (Vasari)",
-                artist: "喬爾喬·瓦薩里 (Giorgio Vasari, 1511–1574)",
-                bg: "義大利著名畫家同建築師，著有《藝苑名人傳》，被尊稱為「藝術史之父」。",
-                story: "瓦薩里除咗係藝術史家，亦係風格主義繪畫嘅核心推手。呢幅畫展現出極具戲劇張力嘅人物姿態同拉長扭曲嘅線條。",
-                impact: "風格主義成熟期嘅代表作，展現咗文藝復興晚期對人體動態同複雜構圖嘅極致追求。",
-                url: "https://www.nmwa.go.jp/en/collection/1988-0001.html",
-                cantoneseAudio: "呢幅畫嘅作者係被譽為藝術史之父嘅瓦薩里。作為風格主義嘅推手，佢喺畫中運用咗拉長而富有戲劇張力嘅人物姿態，展示出文藝復興晚期對複雜構圖嘅極致追求。"
-            },
-            {
-                id: 8,
-                titleZh: "背負十字架的基督",
+                id: "12",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "1562",
+                artist: "約阿希姆·布克萊爾 (Joachim Beuckelaer)",
+                titleZh: "《揹負十字架的基督》",
                 titleEn: "Christ carrying the Cross",
-                artist: "約阿希姆·布克拉爾 (Joachim Beuckelaer, 約 1534–c. 1574)",
-                bg: "法蘭德斯畫家，風俗畫與市場靜物畫場景嘅先驅者。",
-                story: "布克拉爾開創咗將「宗教主題」隱藏喺「日常市場攤販前景」之後嘅手法。前景充滿世俗嘅人物同食材，背景先係艱難背負十字架嘅基督。",
-                impact: "北方風格主義轉向世俗風俗畫同靜物畫發展嘅關鍵橋樑，對後世荷蘭黃金時代繪畫有深遠影響。",
-                url: "https://www.nmwa.go.jp/en/collection/1999-0001.html",
-                cantoneseAudio: "畫家布克拉爾開創咗好特別嘅手法，將背負十字架嘅基督隱藏喺背景，而前景反而係熱鬧嘅日常市場同食材，開啟咗北方藝術由宗教畫轉向世俗風俗畫嘅先河。"
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "約阿希姆·布克萊爾（c. 1534–c. 1574），法蘭德斯畫家，倒置構圖與風俗畫先驅。",
+                tech: "木板油畫，將前景充斥著世俗集市蔬果食材，將聖經主題縮小置於遠景。",
+                status: "從宗教畫走向靜物畫與風俗畫（Genre Painting）轉折期極重要嘅作品。",
+                story: "前景係繁忙嘅市場買賣與平民生活，後方遠處先係耶穌揹負十字架走向受難地嘅場面。",
+                prior: "繼承舅父彼得·阿爾岑（Pieter Aertsen）嘅「倒置聖像畫」風格。",
+                later: "為17世紀荷蘭與法蘭德斯獨立靜物畫與風俗畫嘅誕生開闢咗道路。"
             },
             {
-                id: 9,
-                titleZh: "最後的晚餐",
+                id: "13",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "c. 1570 ?",
+                artist: "喬爾喬·瓦薩里 (Giorgio Vasari)",
+                titleZh: "《客西馬尼園的祈禱》",
+                titleEn: "The Garden of Gethsemane",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "喬爾喬·瓦薩里（1511–1574），西洋藝術史之父（著有《藝苑名人傳》），佛羅倫斯矯飾主義核心大師。",
+                tech: "木板油畫，扭曲拉長嘅身形、複雜嘅人體姿態與劇烈嘅冷暖色彩對比。",
+                status: "義大利晚期矯飾主義（Mannerism）典型風格標本。",
+                story: "耶穌喺夜間客西馬尼園接受天使遞來嘅苦杯，體現極度嘅精神痛苦。",
+                prior: "深刻受米開朗基羅人體肌肉動態與拉斐爾晚期構圖嘅影響。",
+                later: "推動咗文藝復興理論體系嘅建立，並影響咗後來嘅學院派繪畫。"
+            },
+            {
+                id: "14",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "16世紀後半",
+                artist: "馬爾騰·德·沃斯 (Marten de Vos)",
+                titleZh: "《最後的晚餐》",
                 titleEn: "The Last Supper",
-                artist: "馬騰·德·沃斯 (Marten de Vos, 1532–1603)",
-                bg: "16世紀末安特衛普最受矚目嘅歷史畫大師之一，曾遊歷義大利並吸收威尼斯畫派風格。",
-                story: "有別於達芬奇橫向平面的《最後的晚餐》，德·沃斯採用咗風格主義特有嘅對角線構圖同劇場般擺設，強調門徒得知叛徒時嘅驚恐與動盪。",
-                impact: "體現咗反宗教改革（Counter-Reformation）時期，宗教藝術重新強化情感衝擊力與戲劇效果嘅轉變。",
-                url: "https://www.nmwa.go.jp/en/collection/2000-0001.html",
-                cantoneseAudio: "呢幅《最後的晚餐》採用咗強烈嘅對角線構圖同劇場般嘅擺設，生動捕捉門徒聽到有叛徒時嘅驚慌同動盪，充滿反宗教改革時期藝術嘅戲劇衝擊力。"
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "馬爾騰·德·沃斯（1532–1603），安特衛普矯飾主義與反宗教改革繪畫代表。",
+                tech: "帆布油畫，將威尼斯色彩與北方精緻細節融合，人體擺姿富於動態。",
+                status: "連結16世紀北方矯飾主義與17世紀巴洛克繪畫嘅橋樑。",
+                story: "耶穌與十二門徒共享最後晚餐，宣告有人將叛變，門徒反應各異，對角線劇場構圖。",
+                prior: "早年留學義大利，深受丁托列托與委羅內塞嘅威尼斯畫派洗禮。",
+                later: "為魯本斯等17世紀法蘭德斯巴洛克繪畫提供咗靈感素材。"
             },
             {
-                id: 10,
-                titleZh: "亞伯拉罕與以撒的樹林風景",
+                id: "15",
+                zoneKey: "ZONE2",
+                zoneName: "展區二：本館 2樓（14-16世紀哥特晚期/文藝復興/矯飾主義）",
+                year: "1599",
+                artist: "老揚·布呂赫爾 (Jan Brueghel, the Elder)",
+                titleZh: "《有亞伯拉罕與以撒的樹林風景》",
                 titleEn: "Wooded Landscape with Abraham and Isaac",
-                artist: "老揚·勃魯蓋爾 (Jan Brueghel, the Elder, 1568–1625)",
-                bg: "著名老彼得·勃魯蓋爾之子，因精於描繪細致天鵝絨質感嘅風景與花卉而被譽為「絲絨勃魯蓋爾」。",
-                story: "表面看似一幅廣袤寧靜嘅歐洲森林風景畫，但仔細觀察細節，會發現聖經中亞伯拉罕帶住兒子以撒前往祭壇嘅微小身影融入喺宏偉大自然之中。",
-                impact: "獨立風景畫發展史上的里程碑，將傳統宗教故事轉化為風景畫中嘅點綴，開創咗巴洛克風景繪畫嘅新時代。",
-                url: "https://www.nmwa.go.jp/en/collection/1981-0001.html",
-                cantoneseAudio: "被譽為絲絨勃魯蓋爾嘅傑作。畫面上看似一幅廣袤寧靜嘅森林風景，但只要仔細睇，就會發現亞伯拉罕同以撒嘅細小身影融入喺大自然之中，係獨立風景畫發展嘅里程碑。"
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "老揚·布呂赫爾（1568–1625），老彼得·布呂赫爾之子，暱稱「絨毛布呂赫爾」。",
+                tech: "木板油畫，筆觸極其精細，層次豐富嘅三色遠視法（前景棕、中景綠、遠景藍）。",
+                status: "北方獨立風景畫發展史上的里程碑作品。",
+                story: "亞伯拉罕帶著兒子以撒前往山中獻祭，宗教人物縮微於遼闊神聖嘅自然森林之中。",
+                prior: "繼承父親老彼得·布呂赫爾嘅自然觀，並受約阿希姆·帕蒂尼爾世界風景畫影響。",
+                later: "啟發咗17世紀荷蘭黃金時代風景畫與魯本斯嘅宏大風景畫創作。"
+            },
+
+            // --- 展區三 ---
+            {
+                id: "16",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "c. 1612–13",
+                artist: "彼得·保羅·魯本斯 (Peter Paul Rubens)",
+                titleZh: "《兩位睡眠中的孩童》",
+                titleEn: "Two Sleeping Children",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "彼得·保羅·魯本斯（1577–1640），法蘭德斯巴洛克藝術巨匠，歐洲宮廷畫家之王。",
+                tech: "木板油畫，透明罩染法（Glazing），肌膚呈現出溫暖充血嘅生命感與極其柔和嘅光影。",
+                status: "展現魯本斯私人親情題材中極致親暱與非凡寫實功力嘅精品。",
+                story: "據考證描繪嘅係魯本斯兄長菲利普遺留落嚟嘅兩個幼子，充滿無私嘅愛與憐惜。",
+                prior: "融合咗提香嘅豐潤色彩與卡拉瓦喬嘅明暗對照。",
+                later: "影響咗18世紀華托、弗拉戈納爾對孩童與溫柔情感嘅細緻表達。"
+            },
+            {
+                id: "17",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "c. 1618–20",
+                artist: "雅各布·約爾丹斯（傳） (Attributed to Jacob Jordaens)",
+                titleZh: "《羅得及其家人逃離索多瑪》",
+                titleEn: "The Flight of Lot and His Family from Sodom",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "雅各布·約爾丹斯（1593–1678），法蘭德斯巴洛克三大畫家之一。",
+                tech: "帆布油畫，濃重嘅顏料塗抹與飽滿強烈嘅構圖動態。",
+                status: "展現17世紀安特衛普大師工作坊之間互相摹繪與靈感激盪嘅明證。",
+                story: "聖經故事中，天使帶領羅得及其家人逃離即將被天火毀滅嘅罪惡之城索多瑪。",
+                prior: "深受導師與合作者魯本斯嘅戲劇性張力與構圖影響。",
+                later: "促進咗北方巴洛克敘事畫嘅大眾化與風俗化發展。"
+            },
+            {
+                id: "18",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "c. 1624 / 1638",
+                artist: "喬治·德·拉·圖爾 (Georges de La Tour)",
+                titleZh: "《聖多馬》",
+                titleEn: "Saint Thomas",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "喬治·德·拉·圖爾（1593–1652），法國巴洛克神秘光影大師。",
+                tech: "帆布油畫，幾何化簡潔造型，極具沉靜肅穆感嘅集中光線刻劃。",
+                status: "拉·圖爾極其罕見且極具價值嘅聖徒肖像經典（全球僅存數十幅真跡）。",
+                story: "描繪使徒聖多馬手持長矛（其殉道器物），眼神深邃沉思。",
+                prior: "受卡拉瓦喬光影影響，但融入咗法蘭西式嘅理性與寧靜。",
+                later: "對20世紀現代主義造型簡化與寂靜光影產生咗跨時代共鳴。"
+            },
+            {
+                id: "19",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "c. 1635–36",
+                artist: "赫拉爾德·道 (Gerard Dou)",
+                titleZh: "《吹泡泡男孩與靜物》",
+                titleEn: "Still Life with a Boy Blowing Soap-bubbles",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "赫拉爾德·道（1613–1675），倫勃朗的首位弟子，荷蘭「精細畫派」（Fijnschilders）創始人。",
+                tech: "木板油畫，極其精密如微雕般嘅筆觸，極致再現材質質感與光影反光。",
+                status: "荷蘭黃金時代精細繪畫與「虛空」（Vanitas）寓意畫嘅經典。",
+                story: "男孩吹出嘅肥皂泡象徵生命嘅短暫脆弱與虛妄，配合靜物提醒人們珍惜光陰。",
+                prior: "繼承倫勃朗早期嘅明暗法，但發展出更極致精細嘅表面處理。",
+                later: "影響咗18世紀夏爾丹（Chardin）等靜物畫家對日常物件內在質感的探索。"
+            },
+            {
+                id: "20",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "1636",
+                artist: "胡塞佩·德·里貝拉 (Jusepe de Ribera)",
+                titleZh: "《哲學家克拉特斯》",
+                titleEn: "Philosopher Crates",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "胡塞佩·德·里貝拉（1591–1652），西班牙巴洛克畫家，活躍於那不勒斯，暱稱「小西班牙人」。",
+                tech: "帆布油畫，極具震撼力嘅卡拉瓦喬式強烈暗調光影與強烈質感寫實（Tenebrism）。",
+                status: "17世紀古代哲學家肖像畫（乞丐哲學家類型）嘅巔峰之作。",
+                story: "描繪底比斯嘅克拉特斯，佢放棄財富追求犬儒學派哲學，畫中佢身穿破衣卻滿懷智慧。",
+                prior: "深受卡拉瓦喬（Caravaggio）自然主義與戲劇性黑暗法影響。",
+                later: "深刻影響咗委拉斯開茲（Velázquez）與後世戈雅對底層人物與哲人形象嘅刻畫。"
+            },
+            {
+                id: "21",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "c. 1636–38",
+                artist: "居多·雷尼 (Guido Reni)",
+                titleZh: "《盧克麗霞》",
+                titleEn: "Lucretia",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "居多·雷尼（1575–1642），博洛尼亞學派巴洛克古典主義（Bolognese Classicism）代表。",
+                tech: "帆布油畫，雕塑般嘅優雅線條、象牙般光滑嘅肌膚與古典悲劇式嘅沉靜色彩。",
+                status: "巴洛克古典主義理想美學嘅最高展現之一。",
+                story: "古羅馬貞婦盧克麗霞因受辱後選擇自盡以保全清白，成為貞潔與尊嚴嘅象徵。",
+                prior: "受拉斐爾嘅古典和諧美與阿尼巴爾·卡拉奇學派訓練影響。",
+                later: "成為18世紀新古典主義（如大衛）追求道德崇高感與古典造型嘅範本。"
+            },
+            {
+                id: "22",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "1646",
+                artist: "克洛德·洛蘭 (Claude Lorrain)",
+                titleZh: "《有跳舞薩提爾與仙女的風景》",
+                titleEn: "Landscape with Dancing Satyrs and Nymphs",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "克洛德·洛蘭（1604/05–1682），法國巴洛克理想風景畫（Ideal Landscape）宗師。",
+                tech: "帆布油畫，極其精妙嘅大氣透視，捕捉逆光下嘅金色晨昏之光。",
+                status: "西洋藝術史上理想古典風景畫嘅頂峰作品。",
+                story: "田園詩般嘅理想羅馬郊外，神話中嘅薩提爾與仙女喺沉浸於神聖自然光輝嘅樹林裡翩翩起舞。",
+                prior: "受保羅·布里爾與古典田園詩歌（如維吉爾）嘅影響。",
+                later: "直接啟發咗19世紀英國風景畫巨匠透納（J.M.W. Turner）與印象派對光嘅追求。"
+            },
+            {
+                id: "23",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "1646",
+                artist: "雅各布·凡·魯伊斯達爾 (Jacob van Ruysdael)",
+                titleZh: "《沙丘與小瀑布風景》",
+                titleEn: "Landscape with Dune and Small Waterfall",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "雅各布·凡·魯伊斯達爾（c. 1628/29–1682），荷蘭黃金時代最偉大嘅風景畫大師。",
+                tech: "木板油畫，厚重雄渾嘅筆觸、充滿雲影變幻嘅天空與真實奔流嘅水體。",
+                status: "荷蘭寫實主義風景畫嘅經典之作，賦予自然以崇高與靈性。",
+                story: "描繪荷蘭典型嘅低地沙丘、樹木與湍急嘅小瀑布，展現自然界無窮嘅生命力。",
+                prior: "擺脫咗早期荷蘭風景畫嘅單色調限制，吸收咗宏大空間構成。",
+                later: "對19世紀英國康斯太勃爾（Constable）與法國巴比松學派產生咗決定性影響。"
+            },
+            {
+                id: "24",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "17世紀中",
+                artist: "小大衛·特尼爾斯 (David Teniers, the Younger)",
+                titleZh: "《聖安東尼的誘惑》",
+                titleEn: "The Temptation of St. Anthony",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "小大衛·特尼爾斯（1610–1690），法蘭德斯風俗畫與怪誕題材大師。",
+                tech: "帆布油畫，精緻細膩嘅北方寫實，充滿想像力嘅怪誕小魔鬼形象刻畫。",
+                status: "繼承北方中世紀怪誕幻想傳統嘅17世紀代表作。",
+                story: "隱士聖安東尼喺沙漠隱修時，遭遇各種幻化成美女與怪獸嘅魔鬼誘惑，仍堅守信仰。",
+                prior: "深受希羅尼穆斯·波希（Hieronymus Bosch）與老彼得·布呂赫爾怪誕藝術嘅影響。",
+                later: "為後來的超現實主義（如達利、恩斯特）提供咗豐富嘅幻想視覺養分。"
+            },
+            {
+                id: "25",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "c. 1654",
+                artist: "科內利斯·德·希姆 (Cornelis de Heem)",
+                titleZh: "《水果籃靜物》",
+                titleEn: "Still Life with a Basket of Fruit",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "科內利斯·德·希姆（1631–1695），荷蘭/法蘭德斯靜物畫名家。",
+                tech: "木板油畫，絢麗無比嘅色彩，精準複製葡萄皮嘅光澤、露珠與水果表皮質感。",
+                status: "北方盛期華麗靜物畫（Pronkstilleven）嘅完美體現。",
+                story: "滿溢著各式珍貴水果與花卉嘅籃子，展示物質豐盈嘅同時暗喻自然嘅繁衍與消逝。",
+                prior: "繼承父親揚·戴維茲·德·希姆（Jan Davidsz. de Heem）嘅華美靜物風格。",
+                later: "確立咗歐洲靜物畫對質感寫實與裝飾美感雙重追求嘅標準。"
+            },
+            {
+                id: "26",
+                zoneKey: "ZONE3",
+                zoneName: "展區三：本館 2樓（17世紀 巴洛克與北方寫實主義）",
+                year: "c. 1655",
+                artist: "卡洛·多爾齊 (Carlo Dolci)",
+                titleZh: "《痛苦之母》",
+                titleEn: "Mater Dolorosa",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "卡洛·多爾齊（1616–1687），佛羅倫斯巴洛克虔誠主義畫家。",
+                tech: "帆布油畫，極其細膩平滑如琺瑯般嘅畫風，充滿青藍色調與深沉光照。",
+                status: "17世紀反宗教改革情感主義（Emotionalism）與虔誠宗教畫嘅代表。",
+                story: "理想化畫家嘅妻子特蕾莎為聖母模特兒，展現聖母承受喪子之痛時深沉而肅穆嘅悲傷。",
+                prior: "受拉斐爾式聖母造型與佛羅倫斯繪畫傳統影響。",
+                later: "影響咗18及19世紀宗教畫中對情感共鳴與極致虔誠氛圍嘅視覺塑造。"
+            },
+
+            // --- 展區四 ---
+            {
+                id: "27",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "c. 1714",
+                artist: "尼古拉·德·拉吉利耶 (Nicolas de Largillière)",
+                titleZh: "《年輕貴族肖像》",
+                titleEn: "Portrait of a Young Nobleman",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "尼古拉·德·拉吉利耶（1656–1746），法國宮廷肖像畫巨匠。",
+                tech: "帆布油畫，極其華麗嘅假髮與絲綢布料質感，色彩溫暖富麗。",
+                status: "法國路易十四晚期至攝政時期華貴肖像畫嘅代表。",
+                story: "描繪一位姿態優雅、身著金絲繡花禮服嘅年輕貴族男子，展示其尊貴嘅社會地位與自信。",
+                prior: "早年喺安特衛普受勒利與凡·戴克法蘭德斯華麗肖像風格影響。",
+                later: "奠定咗18世紀法國羅可可肖像畫嘅優雅典範。"
+            },
+            {
+                id: "28",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "c. 1718–25",
+                artist: "亞歷山德羅·馬尼亞斯科 (Alessandro Magnasco)",
+                titleZh: "《暴風雨的大海與風景》",
+                titleEn: "Landscape with Stormy Sea",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "亞歷山德羅·馬尼亞斯科（1667–1749），熱那亞前羅可可畫家，暱稱「伊爾·利薩德羅」。",
+                tech: "帆布油畫，快速、狂放且充滿動感嘅飛動筆觸，暗色調中閃爍強烈亮光。",
+                status: "前浪漫主義（Pre-Romanticism）與表現主義筆觸嘅先行者。",
+                story: "暴風雨肆虐嘅驚濤駭浪與狂風殘雲，渺小嘅人類喺狂暴大自然面前掙扎。",
+                prior: "受丁托列托嘅動態與薩爾瓦托·羅薩狂野風景畫影響。",
+                later: "直接啟發咗哥雅（Goya）與浪漫主義對狂野自然與內喺不安嘅抒發。"
+            },
+            {
+                id: "29",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "1739",
+                artist: "讓-馬克·納蒂埃 (Jean-Marc Nattier)",
+                titleZh: "《普勒內夫夫人肖像》",
+                titleEn: "Portrait of Madame Marie-Henriette-Berthelet de Pleuneuf",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "讓-馬克·納蒂埃（1685–1766），法國羅可可宮廷神話肖像畫大師。",
+                tech: "帆布油畫，柔和粉嫩嘅膚色、精緻嘅薄紗與神話寓意式嘅裝扮構圖。",
+                status: "法國路易十五宮廷最受追捧嘅神話肖像（Portrait mythologique）代表。",
+                story: "將貴族夫人普勒內夫打扮成神話女神或仙女姿態，賦予肖像詩意與青春永駐嘅神話色彩。",
+                prior: "受華托（Watteau）嘅優雅情調與魏熱·勒布倫之前宮廷審美嘅影響。",
+                later: "深刻影響咗18世紀歐洲貴族女性肖像畫嘅審美風尚。"
+            },
+            {
+                id: "30",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "c. 1763–65",
+                artist: "讓-奧諾雷·弗拉戈納爾 (Jean-Honoré Fragonard)",
+                titleZh: "《牧羊人與羊群風景》",
+                titleEn: "Landscape with Shepherds and Flock of Sheep",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "讓-奧諾雷·弗拉戈納爾（1732–1806），法國羅可可繪畫最後嘅巨匠。",
+                tech: "帆布油畫，極其輕快自由、近乎印象派般嘅流暢筆觸，充滿日光感。",
+                status: "展現弗拉戈納爾喺洛可可田園詩（Pastorale）風景畫上嘅超凡天賦。",
+                story: "描繪陽光普照嘅田園景色中，牧羊人帶著羊群休養生息嘅恬靜生活。",
+                prior: "受布歇（Boucher）嘅甜美與荷蘭17世紀田園風景畫嘅影響。",
+                later: "其極其自由飛動嘅筆觸與對光線嘅捕捉，成為後世印象派（如雷諾瓦）嘅靈感源泉。"
+            },
+            {
+                id: "31",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "1773",
+                artist: "克洛德·約瑟夫·韋爾內 (Joseph Vernet)",
+                titleZh: "《夏日夜晚，義大利風景》",
+                titleEn: "Summer Evening, Landscape in Italy",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "克洛德·約瑟夫·韋爾內（1714–1789），法國最著名嘅海景與風景畫家。",
+                tech: "帆布油畫，精確嘅天空霞光渲染，完美嘅沉靜水面倒影與人物點綴。",
+                status: "18世紀歐洲大旅行（Grand Tour）時期義大利風光畫嘅傑作。",
+                story: "夕陽西下時嘅義大利沿海或湖畔，人們喺夏夜微風中散步休憩，氣候宜人。",
+                prior: "承襲克洛德·洛蘭嘅逆光風景與義大利古典風景傳統。",
+                later: "啟發咗19世紀浪漫主義風景畫對天色變幻與氣氛（Atmosphere）嘅塑造。"
+            },
+            {
+                id: "32",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "c. 1783",
+                artist: "瑪麗-加布里埃爾·卡佩 (Marie-Gabrielle Capet)",
+                titleZh: "《自畫像（專注繪畫的藝術家）》",
+                titleEn: "Self-portrait",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "瑪麗-加布里埃爾·卡佩（1761–1818），法國新古典主義傑出女性畫家。",
+                tech: "帆布油畫，造型嚴謹，光線柔和，對衣服質感與執筆手嘅細節刻畫入微。",
+                status: "打破男性壟斷嘅18世紀女性藝術家自畫像精品。",
+                story: "畫家描繪自己身著優雅服飾，手持畫筆與畫板正專注於藝術創作嘅瞬間，展現職業女性嘅自信。",
+                prior: "受其導師阿黛拉伊德·拉比耶-吉亞爾與魏熱·勒布倫影響。",
+                later: "為19世紀女性藝術家爭取藝術主體性與專業地位樹立咗先例。"
+            },
+            {
+                id: "33",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "c. 1783",
+                artist: "約翰·海因里希·菲斯利 (Henry Fuseli)",
+                titleZh: "《狄奧多在森林中遭遇祖先卡瓦爾康蒂的幽靈》",
+                titleEn: "Theodore Meets in the Wood the Spectre...",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "約翰·海因里希·菲斯利（1741–1825），瑞士/英國浪漫主義前驅，黑暗浪漫主義大師。",
+                tech: "帆布油畫，劇烈嘅戲劇性舞台光影、誇張拉長嘅人體與狂暴嘅心理情緒表現。",
+                status: "哥特式浪漫主義與黑暗浪漫主義（Dark Romanticism）嘅開山之作。",
+                story: "取材自薄伽丘《十日談》中嘅幽靈獵人故事，狄奧多喺森林中目睹祖先幽靈追捕女子靈魂嘅恐怖景象。",
+                prior: "受米開朗基羅狂野嘅人體動態與英國哥特小說文學嘅深刻影響。",
+                later: "直接影響咗威廉·布萊克（William Blake）與後來的超現實主義精神分析美學。"
+            },
+            {
+                id: "34",
+                zoneKey: "ZONE4",
+                zoneName: "展區四：本館 2樓（18世紀 羅可可與啟蒙時代）",
+                year: "1786",
+                artist: "于貝爾·羅貝爾 (Hubert Robert)",
+                titleZh: "《想像中的羅馬景觀》",
+                titleEn: "Imaginary View of Rome with the Horse-Tamer...",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "于貝爾·羅貝爾（1733–1808），法國畫家，暱稱「廢墟的羅貝爾」（Robert des Ruines）。",
+                tech: "帆布油畫，將真實羅馬古蹟進行幻想式重組（Capriccio），光線溫暖、空間遼闊。",
+                status: "18世紀廢墟美學與隨想畫（Capriccio）嘅最高代表。",
+                story: "將蒙特卡瓦洛嘅馴馬人雕像、圖拉真柱、馬可·奧勒留騎馬像等不同地點嘅古羅馬遺跡組合喺同一虛構畫面上。",
+                prior: "受義大利廢墟畫家皮拉內西（Piranesi）與帕尼尼（Panini）嘅深刻影響。",
+                later: "啟發咗浪漫主義對歷史遺跡嘅懷古傷感與時空交錯感。"
+            },
+
+            // --- 展區五 ---
+            {
+                id: "35",
+                zoneKey: "ZONE5",
+                zoneName: "展區五：新館（19世紀 浪漫主義、寫實主義與印象派前夕）",
+                year: "1852",
+                artist: "歐仁·德拉克洛瓦 (Eugène Delacroix)",
+                titleZh: "《聖母的教育》",
+                titleEn: "The Education of the Virgin",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "歐仁·德拉克洛瓦（1798–1863），法國浪漫主義繪畫雄獅。",
+                tech: "帆布油畫，厚重且充滿動感嘅色彩筆觸，擺脫嚴謹線條，以色彩堆疊情感。",
+                status: "德拉克洛瓦晚期將浪漫主義色彩融入溫情宗教題材嘅傑作。",
+                story: "描繪聖母瑪利亞年幼時喺母親聖安妮膝下學習閱讀聖經嘅溫馨情景。",
+                prior: "受提香、魯本斯嘅色彩美學與北非之旅嘅光彩影響。",
+                later: "其純粹嘅色彩應用與分割筆觸，直接啟發咗印象派與後印象派（尤其是塞尚與梵谷）。"
+            },
+            {
+                id: "36",
+                zoneKey: "ZONE5",
+                zoneName: "展區五：新館（19世紀 浪漫主義、寫實主義與印象派前夕）",
+                year: "1858",
+                artist: "古斯塔夫·庫爾貝 (Gustave Courbet)",
+                titleZh: "《睡裸》",
+                titleEn: "Sleeping Nude",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "古斯塔夫·庫爾貝（1819–1877），法國寫實主義（Realism）運動領袖，主張「只畫睇得見嘅嘢」。",
+                tech: "帆布油畫，使用畫刀（Palette knife）塗抹堆疊顏料，展現極具肉體存在感與質感嘅裸體。",
+                status: "突破理想化古典裸體限制，回歸真實肉體寫實嘅革命性作品。",
+                story: "描繪一位真實、未加神話粉飾嘅沉睡女性軀體，摒棄咗理想化嘅女神外衣。",
+                prior: "受17世紀西班牙與法蘭德斯巴洛克寫實傳統嘅影響。",
+                later: "震動咗巴黎沙龍，為馬奈與印象派裸體畫革新（如《草地上的午餐》）開闢咗道路。"
+            },
+            {
+                id: "37",
+                zoneKey: "ZONE5",
+                zoneName: "展區五：新館（19世紀 浪漫主義、寫實主義與印象派前夕）",
+                year: "1867",
+                artist: "但丁·加百利·羅塞蒂 (Dante Gabriel Rossetti)",
+                titleZh: "《愛的聖杯》",
+                titleEn: "The Loving Cup",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "但丁·加百利·羅塞蒂（1828–1882），英國拉斐爾前派（Pre-Raphaelites）創始人之一。",
+                tech: "木板油畫，極其絢麗濃郁嘅色彩，充滿中世紀風格嘅服飾與裝飾圖案細節。",
+                status: "拉斐爾前派與唯美主義（Aestheticism）「為藝術而藝術」嘅典型代表。",
+                story: "女子舉杯祝酒，象徵騎士文學中嘅愛情誓言與中世紀浪漫情懷。",
+                prior: "受早期文藝復興畫家與喬爾喬內、提香色彩嘅影響。",
+                later: "直接孕育咗19世紀末嘅象徵主義（Symbolism）與新藝術運動（Art Nouveau）。"
+            },
+            {
+                id: "38",
+                zoneKey: "ZONE5",
+                zoneName: "展區五：新館（19世紀 浪漫主義、寫實主義與印象派前夕）",
+                year: "1870–72",
+                artist: "讓-巴蒂斯特·卡米耶·柯洛 (Camille Corot)",
+                titleZh: "《那不勒斯海灘的回憶》",
+                titleEn: "Reminiscence of the Beach of Naples",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "讓-巴蒂斯特·卡米耶·柯洛（1796–1875），巴比松學派精神領袖，抒情風景畫大師。",
+                tech: "帆布油畫，羽毛般柔和嘅灰調筆觸（Souvenir風格），充滿銀灰色光影與詩意霧氣。",
+                status: "連結古典風景畫與現代印象派風景畫最關鍵嘅橋樑作品。",
+                story: "晚年柯洛憑藉年輕時喺義大利留落嚟嘅記憶，創作出的帶有鄉愁與夢幻色彩嘅意境風景。",
+                prior: "受普桑、洛蘭嘅古典風景與外光畫（En plein air）習作影響。",
+                later: "被印象派畫家尊為共同導師，對莫內、畢沙羅嘅外光探索有直接啟蒙。"
+            },
+            {
+                id: "39",
+                zoneKey: "ZONE5",
+                zoneName: "展區五：新館（19世紀 浪漫主義、寫實主義與印象派前夕）",
+                year: "1872",
+                artist: "皮埃爾-奧古斯特·雷諾瓦 (Pierre-Auguste Renoir)",
+                titleZh: "《阿爾及利亞風情的巴黎女性（後宮）》",
+                titleEn: "Parisiennes in Algerian Costume or Harem",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "皮埃爾-奧古斯特·雷諾瓦（1841–1919），印象派大師，光影與生命喜悅嘅讚歌作者。",
+                tech: "帆布油畫，極其豐富絢麗嘅色彩，將北非異域服飾與巴黎女性嘅嬌美結合。",
+                status: "雷諾瓦早期向德拉克洛瓦致敬、探索東方主義（Orientalism）與印象派色彩嘅巨作。",
+                story: "讓巴黎模特兒穿上阿爾及利亞傳統服飾，重現德拉克洛瓦《阿爾及利亞婦女》嘅異國後宮情調。",
+                prior: "向德拉克洛瓦嘅色彩表達致敬，並吸取華托羅可可甜美色彩。",
+                later: "展現咗印象派畫家喺走向純粹戶外光影前對室內光彩與裝飾美嘅探討。"
+            },
+            {
+                id: "40",
+                zoneKey: "ZONE5",
+                zoneName: "展區五：新館（19世紀 浪漫主義、寫實主義與印象派前夕）",
+                year: "c. 1873–76",
+                artist: "古斯塔夫·莫羅 (Gustave Moreau)",
+                titleZh: "《監獄中的莎樂美》",
+                titleEn: "Salome at the Prison",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "古斯塔夫·莫羅（1826–1898），法國象徵主義（Symbolism）繪畫宗師。",
+                tech: "帆布油畫，寶石般璀璨嘅厚塗與刻劃，充滿神秘神話色彩與夢幻肌理。",
+                status: "象徵主義繪畫與「致命女子」（Femme fatale）主題嘅極致經典。",
+                story: "莎樂美手持蓮花踏入陰暗嘅監獄，等待施洗約翰被斬首嘅時刻，充滿神秘與罪孽美感。",
+                prior: "受拜占庭鑲嵌畫、文藝復興曼特尼亞與印度細密畫裝飾紋樣嘅影響。",
+                later: "直接啟發咗野獸派馬蒂斯（莫內係其老師）與野獸派色彩解放，以及超現實主義。"
+            },
+            {
+                id: "41",
+                zoneKey: "ZONE5",
+                zoneName: "展區五：新館（19世紀 浪漫主義、寫實主義與印象派前夕）",
+                year: "c. 1879",
+                artist: "愛德華·馬奈 (Édouard Manet)",
+                titleZh: "《布倫先生肖像》",
+                titleEn: "Portrait of Monsieur Brun",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "愛德華·馬奈（1832–1883），現代繪畫之父，連接古典與印象派嘅革新者。",
+                tech: "帆布油畫，快速大膽嘅平面化塗抹（Alla prima），簡化中間調，強調強烈明暗對比。",
+                status: "馬奈晚期將印象派戶外光影與都市紳士肖像結合嘅精細之作。",
+                story: "描繪巴黎紳士布倫先生喺花園中嘅隨性立像，展現19世紀末巴黎現代生活嘅雅緻風格。",
+                prior: "深受委拉斯開茲（Velázquez）黑色調與哈爾斯揮灑筆觸嘅影響。",
+                later: "開啟咗現代畫強調繪畫本身平面性與筆觸獨立性嘅先河。"
+            },
+
+            // --- 展區六 ---
+            {
+                id: "42",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "c. 1881",
+                artist: "卡米耶·畢沙羅 (Camille Pissarro)",
+                titleZh: "《交談》",
+                titleEn: "Conversation",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "卡米耶·畢沙羅（1830–1903），印象派嘅堅實核心與長者。",
+                tech: "帆布油畫，短小點狀嘅色塊交織，捕捉陽光穿透樹葉撒喺人物身上嘅斑駁光影。",
+                status: "印象派鄉村風俗與自然光影融為一體嘅經典。",
+                story: "描繪鄉村農婦喺田間停落腳步低聲交談嘅日常瞬間，充滿對勞動者嘅溫情。",
+                prior: "受柯洛與米勒（Millet）寫實主義農民題材嘅深刻影響。",
+                later: "畢沙羅作為秀拉、高更與塞尚嘅共同導師，此類點狀筆觸啟發咗新印象派。"
+            },
+            {
+                id: "43",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1885–86",
+                artist: "保羅·塞尚 (Paul Cézanne)",
+                titleZh: "《雅德布凡的枯樹》",
+                titleEn: "The Bare Trees at Jas de Bouffan",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "保羅·塞尚（1839–1906），現代藝術之父。",
+                tech: "帆布油畫，幾何結構化嘅筆觸（Constructive brushstroke），以色彩冷暖塑造幾何體積。",
+                status: "塞尚從印象派走向分析自然結構、開創現代藝術關鍵轉折期嘅作品。",
+                story: "描繪塞尚家族喺普羅旺斯莊園「雅德布凡」冬日嘅枯樹，透過樹枝構建畫面的幾何網絡。",
+                prior: "吸取印象派外光色彩，但摒棄其瞬間隨意性，追尋自然嘅永恆結構。",
+                later: "直接孕育咗立體主義（Picasso & Braque），改變咗整個20世紀視覺藝術軌跡。"
+            },
+            {
+                id: "44",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1887",
+                artist: "克洛德·莫內 (Claude Monet)",
+                titleZh: "《在船上》",
+                titleEn: "On the Boat",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "克洛德·莫內（1840–1926），印象派創始人與靈魂人物，光嘅追隨者。",
+                tech: "帆布油畫，極其自由流暢嘅色彩分割，將水面嘅倒影與空氣嘅流動化為純粹嘅色塊。",
+                status: "莫內喺吉維尼（Giverny）時期探索水體與光影互動嘅傑作。",
+                story: "描繪莫內嘅養女們喺塞納河支流上划船嘅悠閒場景，水面嘅綠意與倒影相互交融。",
+                prior: "受日本浮世繪（Ukiyo-e）非對稱構圖與透視裁切嘅深刻影響。",
+                later: "為其晚期《睡蓮》系列對純粹色彩與水面空間嘅抽象化探索奠定咗基礎。"
+            },
+            {
+                id: "45",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1888",
+                artist: "保羅·高更 (Paul Gauguin)",
+                titleZh: "《布列塔尼風景》",
+                titleEn: "Landscape of Brittany",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "保羅·高更（1848–1903），後印象派大師，象徵主義與原始主義先驅。",
+                tech: "帆布油畫，綜合主義（Synthetism），簡化嘅色塊、濃重嘅輪廓線與主觀強烈嘅色彩。",
+                status: "高更喺布列塔尼阿凡橋時期擺脫印象派模仿自然、走向主觀情感表達嘅代表。",
+                story: "描繪布列塔尼鄉村古樸、未被現代文明污染嘅自然土地與平靜村莊。",
+                prior: "受印象派（畢沙羅）、日本浮世繪與民間民俗藝術影響。",
+                later: "直接啟發咗納比派（Nabis）、野獸派（Fauvism）與表現主義色彩解放。"
+            },
+            {
+                id: "46",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1889",
+                artist: "文森·梵谷 (Vincent van Gogh)",
+                titleZh: "《玫瑰》",
+                titleEn: "Roses",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "文森·梵谷（1853–1890），後印象派偉大天才，用生命與激情繪畫嘅藝術家。",
+                tech: "帆布油畫，厚塗法（Impasto），充滿生命爆發力嘅螺紋與線條筆觸，綠色與粉白嘅劇烈情緒共鳴。",
+                status: "梵谷喺聖雷米精神醫院時期創作嘅生命與希望之歌。",
+                story: "梵谷喺精神病發作間隙，對著醫院花園中嘅玫瑰花強烈創作，表達對重生與自然嘅熾熱渴望。",
+                prior: "受印象派色彩與日本浮世繪花鳥畫線條嘅深刻洗禮。",
+                later: "成為20世紀表現主義（Expressionism）最直接嘅靈感源泉，影響咗無數現代藝術家。"
+            },
+            {
+                id: "47",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1890",
+                artist: "莫里斯·德尼 (Maurice Denis)",
+                titleZh: "《抱小雞的少女》",
+                titleEn: "Young Girl with a Hen",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "莫里斯·德尼（1870–1943），納比派（Nabis）理論家與象徵主義畫家。",
+                tech: "帆布油畫，極其平面化嘅色塊拼貼（Cloisonnism），拉長狹高嘅裝飾性構圖。",
+                status: "踐行德尼名言「畫作喺成為戰馬或裸女前，本質上係一個塗滿顏色嘅平面」嘅經典標本。",
+                story: "描繪少女抱著小雞嘅純真鄉村畫面，被轉化為富於宗教寧靜感與純粹裝飾美嘅平面圖像。",
+                prior: "受高更阿凡橋學派與中世紀彩繪玻璃嘅影響。",
+                later: "推動咗20世紀現代裝飾藝術與平面抽象風格嘅發展。"
+            },
+            {
+                id: "48",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1891",
+                artist: "皮埃爾·波納爾 (Pierre Bonnard)",
+                titleZh: "《與兔子坐在一起的少女》",
+                titleEn: "Young Girl Sitting with a Rabbit",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "皮埃爾·波納爾（1867–1947），納比派創始成員，親密主義（Intimisme）大師。",
+                tech: "帆布油畫，狹長垂直構圖，強烈嘅日本主義（Japonisme）平面裝飾性與奇特視角。",
+                status: "波納爾早年喺納比派時期探索日本美學與日常親密氛圍嘅代表作。",
+                story: "描繪少女與寵物兔子喺室內嘅親密時光，空間被高度平面化為織物般嘅色彩圖案。",
+                prior: "深受日本浮世繪版畫版式與高更色塊影響。",
+                later: "啟發咗現代繪畫對空間深度重構與裝飾性色彩組合嘅探索。"
+            },
+            {
+                id: "49",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1901–02",
+                artist: "保羅·西涅克 (Paul Signac)",
+                titleZh: "《聖特羅佩港》",
+                titleEn: "The Port of Saint-Tropez",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "保羅·西涅克（1863–1935），新印象派與點彩畫派（Pointillism）領袖。",
+                tech: "帆布油畫，如馬賽克般嚴謹拼貼嘅原色色點，利用光學混合產生璀璨光感。",
+                status: "新印象派科學色彩理論與抒情海景結合嘅巔峰作品。",
+                story: "描繪地中海陽光沐浴下嘅聖特羅佩港口，帆船與水面喺強烈光線下閃爍著彩虹般嘅光芒。",
+                prior: "深受秀拉（Seurat）光學點彩理論與光學科學研究嘅影響。",
+                later: "其馬賽克式嘅色點直接啟發咗馬蒂斯嘅野獸派爆炸色彩與幾何抽象派。"
+            },
+            {
+                id: "50",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1912",
+                artist: "阿爾貝·格萊茲 (Albert Gleizes)",
+                titleZh: "《打穀收穫》",
+                titleEn: "Harvest Threshing",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "阿爾貝·格萊茲（1881–1953），立體主義重要畫家與理論家（著有《立體主義》）。",
+                tech: "巨幅帆布油畫，幾何立體解構，多視角同時交疊與動態幾何分割。",
+                status: "黃金分割派（Section d'Or）與沙龍立體主義最具代表性嘅宏大巨作之一。",
+                story: "以巨幅畫卷描繪現代農業勞動中人、機械與自然嘅交融，充滿現代工業時代嘅韻律感。",
+                prior: "受塞尚嘅幾何結構與畢卡索/布拉克早期立體主義影響。",
+                later: "推動咗未來主義（Futurism）與幾何抽象藝術（如德勞內嘅全向立體主義）嘅演進。"
+            },
+            {
+                id: "51",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1916",
+                artist: "克洛德·莫內 (Claude Monet)",
+                titleZh: "《睡蓮》",
+                titleEn: "Water Lilies",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "克洛德·莫內（印象派創始人）。",
+                tech: "巨幅帆布油畫，打破傳統地平線與透視焦點，筆觸如水流般縱橫交錯，接近純粹色彩表現。",
+                status: "莫內晚期《睡蓮》大裝飾畫系列嘅精華，連結印象派與20世紀抽象表現主義嘅聖物。",
+                story: "莫內晚年因白內障視力受損，喺吉維尼花園睡蓮池旁憑心靈與光彩記憶創作，描繪水天一色嘅神聖冥想世界。",
+                prior: "終生對光影與水體探索嘅總結，以及日本園林美學嘅融合。",
+                later: "直接啟發咗二次大戰後美國抽象表現主義（如波洛克、羅斯科）嘅巨幅色域與無焦點構圖。"
+            },
+            {
+                id: "52",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1920",
+                artist: "柴姆·蘇丁 (Chaim Soutine)",
+                titleZh: "《瘋婦》",
+                titleEn: "Mad Woman",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "柴姆·蘇丁（1893–1943），巴黎學派（École de Paris）代表畫家，表現主義天才。",
+                tech: "帆布油畫，扭曲狂亂嘅線條、血紅與暗綠嘅劇烈對比，厚重扭曲嘅顏料堆疊。",
+                status: "20世紀巴黎學派探討人類精神痛苦與內心痙攣嘅悲劇史詩作品。",
+                story: "描繪一位精神失常女子嘅狂亂眼神與扭曲肢體，透出無處安放嘅絕望與痛苦。",
+                prior: "受倫勃朗厚重顏料與格呂內瓦爾德（Grünewald）痛苦表現主義影響。",
+                later: "深刻影響咗法蘭西斯·培根（Francis Bacon）與戰後具象表現主義大師。"
+            },
+            {
+                id: "53",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1925",
+                artist: "阿里斯蒂德·馬約爾 (Aristide Maillol)",
+                titleZh: "《法蘭西島》",
+                titleEn: "Ile-de-France",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "阿里斯蒂德·馬約爾（1861–1944），法國現代雕塑大師，反羅丹風格嘅代表。",
+                tech: "青銅雕塑，簡化細節，強調渾圓平滑嘅建築體量感與靜止沉穩嘅古典體態。",
+                status: "現代雕塑中回歸古典建築美學與純粹形式感嘅典範。",
+                story: "以健美嘅女性軀體邁步向前，象徵塞納河包圍嘅法蘭西島（巴黎大區）嘅生命力與永恆安寧。",
+                prior: "反對羅丹嘅劇烈起伏與情感動盪，回歸古希臘古風時期雕塑嘅寧靜沉穩。",
+                later: "開啟咗亨利·摩爾（Henry Moore）等20世紀現代抽象雕塑對體量與線條純粹性嘅探索。"
+            },
+            {
+                id: "54",
+                zoneKey: "ZONE6",
+                zoneName: "展區六：新館（19世紀末-20世紀初 印象派、後印象派與前衛）",
+                year: "1927",
+                artist: "馬克斯·恩斯特 (Max Ernst)",
+                titleZh: "《石化森林》",
+                titleEn: "Petrified Forest",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "馬克斯·恩斯特（1891–1976），達達主義與超現實主義核心大師。",
+                tech: "帆布油畫，採用「磨擦法」（Frottage）與「刮刮法」（Grattage），透過偶然發生嘅肌理觸發潛意識想像。",
+                status: "超現實主義自動主義（Automated technique）與夢境風景嘅代表作。",
+                story: "描繪夢境中冰冷、神秘、彷彿時間凝固嘅石化原始森林，暗喻文明嘅荒涼與潛意識嘅恐懼。",
+                prior: "受弗洛伊德精神分析學說與波希怪誕想像力嘅影響。",
+                later: "推動咗20世紀繪畫技法嘅革命，直接滋養咗美國抽象表現主義。"
+            },
+
+            // --- 展區七 ---
+            {
+                id: "55",
+                zoneKey: "ZONE7",
+                zoneName: "展區七：新館（20世紀二次大戰後戰後現代藝術）",
+                year: "c. 1948–52",
+                artist: "喬治·魯奧 (Georges Rouault)",
+                titleZh: "《驚奇者》",
+                titleEn: "L'Ébahi (The Surprised)",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "喬治·魯奧（1871–1958），野獸派與宗教表現主義大師。",
+                tech: "木板油畫（加繪畫框），如中世紀教堂彩色玻璃般極其粗重黑色嘅輪廓線，充填寶石般厚重嘅顏料。",
+                status: "戰後獨樹一幟嘅宗教精神表現主義傑作。",
+                story: "描繪一位滿臉驚奇孤獨嘅人物，體現人類面對神聖光輝與命運困境時嘅震撼與卑微。",
+                prior: "早年做過中世紀彩色玻璃修復工，受哥特藝術與莫羅嘅深刻影響。",
+                later: "為戰後具象繪畫喺面對抽象浪潮時保留強烈嘅精神與宗教感染力。"
+            },
+            {
+                id: "56",
+                zoneKey: "ZONE7",
+                zoneName: "展區七：新館（20世紀二次大戰後戰後現代藝術）",
+                year: "1951",
+                artist: "傑克森·波洛克 (Jackson Pollock)",
+                titleZh: "《第8號，1951，黑色流動》",
+                titleEn: "Number 8, 1951, Black Flowing",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "傑克森·波洛克（1912–1956），美國抽象表現主義與滴畫（Action Painting）領袖。",
+                tech: "棉布琺瑯漆，滴畫技法（Drip painting），摒棄傳統畫架與畫筆，用身體韻律將漆料甩潑喺地面畫布上。",
+                status: "波洛克黑畫系列（Black Pourings）嘅經典，西洋藝術重心轉移至紐約嘅歷史見證。",
+                story: "波洛克喺滴畫巔峰後，回歸以黑色琺瑯漆喺未處理畫布上進行純粹線條與隱約具象形體嘅流動探索。",
+                prior: "受印第安沙畫、恩斯特嘅超現實主義自動主義與畢卡索《格爾尼卡》線條力量影響。",
+                later: "徹底解放咗畫布空間，啟發咗極簡主義、概念藝術與行為藝術。"
+            },
+            {
+                id: "57",
+                zoneKey: "ZONE7",
+                zoneName: "展區七：新館（20世紀二次大戰後戰後現代藝術）",
+                year: "1953",
+                artist: "費爾南·萊熱 (Fernand Léger)",
+                titleZh: "《紅公雞與藍天》",
+                titleEn: "Red Cock and Blue Sky",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "費爾南·萊熱（1881–1955），立體派與「機械美學」（Machine Aesthetic）大師。",
+                tech: "帆布油畫，黑色嘅強烈線條與獨立出線條之外嘅純粹原色色塊相結合。",
+                status: "萊熱晚期將工業幾何線條與鄉村民俗符號完美結合嘅傑作。",
+                story: "鮮紅嘅公雞與藍天造型被解構為簡練嘅符號與色塊，充滿戰後生命嘅勃勃生機與工業感。",
+                prior: "受塞尚、立體主義與現代工業機械結構美感嘅影響。",
+                later: "其將大眾流行符號與清晰色彩結合嘅風格，成為波普藝術（Pop Art）嘅直接前驅。"
+            },
+            {
+                id: "58",
+                zoneKey: "ZONE7",
+                zoneName: "展區七：新館（20世紀二次大戰後戰後現代藝術）",
+                year: "1953",
+                artist: "胡安·米羅 (Joan Miró)",
+                titleZh: "《畫作》",
+                titleEn: "Painting",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "胡安·米羅（1893–1983），西班牙超現實主義與符號抽象大師。",
+                tech: "帆布油畫，極其簡潔嘅符號化線條、星體生物造型與純粹原色（紅、藍、黑）。",
+                status: "米羅二戰後風格極致純粹成熟期（詩意符號抽象）嘅代表作。",
+                story: "如童真般嘅神秘符號喺廣袤空間中浮動，展現藝術家內心宇宙嘅詩意與自由。",
+                prior: "受加泰羅尼亞民間藝術、達達主義與超現實主義潛意識詩歌嘅影響。",
+                later: "對戰後抽象藝術、符號學繪畫以及當代插畫設計產生咗極其深遠嘅啟蒙。"
+            },
+            {
+                id: "59",
+                zoneKey: "ZONE7",
+                zoneName: "展區七：新館（20世紀二次大戰後戰後現代藝術）",
+                year: "1954",
+                artist: "讓·杜布菲 (Jean Dubuffet)",
+                titleZh: "《長著美麗尾巴的母牛》",
+                titleEn: "Cow with a Beautiful Tail",
+                imgUrl: "", // RESERVED PLACEHOLDER
+                bio: "讓·杜布菲（1901–1985），法國「原生藝術」（Art Brut / Raw Art）創始人。",
+                tech: "帆布油畫，混合沙土、顏料等粗糙肌理（Texturology），如兒童畫或塗鴉般稚拙大膽。",
+                status: "顛覆西方傳統美學、開創原生藝術與非主流藝術（Outsider Art）嘅里程碑作品。",
+                story: "以極其滑稽、幼稚且質樸嘅線條描繪一頭母牛，嘲諷西方傳統藝術對高雅美嘅執念，回歸最原始嘅視覺本能。",
+                prior: "受精神病患者創作、兒童塗鴉與原始壁畫嘅深刻啟發。",
+                later: "直接啟發咗塗鴉藝術（如巴斯奇亞 Basquiat、哈林 Haring）、新表現主義與當代非主流藝術。"
             }
         ];
 
-        // 頁面初始渲染
+        // 初始化與 DOM 繪製
         const container = document.getElementById('artwork-list');
-        const selectEl = document.getElementById('quickJumpSelect');
+        const jumpSelect = document.getElementById('quickJumpSelect');
 
         function renderApp() {
             container.innerHTML = '';
-            
+            jumpSelect.innerHTML = '<option value="">🎯 快速跳轉作品 (01 - 59)...</option>';
+
             artworks.forEach((art) => {
-                // 1. 動態新增下拉選單選項 (Select Dropdown)
+                // 1. 填充跳轉下拉選單 (Requirement 2: 保持 01-59 順序)
                 const opt = document.createElement('option');
                 opt.value = `art-${art.id}`;
-                opt.innerText = `${art.id}. ${art.titleEn} (${art.titleZh})`;
-                selectEl.appendChild(opt);
+                opt.innerText = `${art.id}. ${art.titleZh} (${art.titleEn})`;
+                jumpSelect.appendChild(opt);
 
-                // 2. 動態生成畫作卡片 (Cards)
+                // 2. 構建作品卡片
                 const card = document.createElement('div');
                 card.className = 'artwork-card';
                 card.id = `art-${art.id}`;
-                card.setAttribute('data-search', `${art.titleZh} ${art.titleEn} ${art.artist}`.toLowerCase());
+                card.setAttribute('data-zone', art.zoneKey);
+                card.setAttribute('data-search', `${art.id} ${art.titleZh} ${art.titleEn} ${art.artist}`.toLowerCase());
+
+                // 處理圖片預留位置 (Requirement 4)
+                let imageHtml = '';
+                if (art.imgUrl && art.imgUrl.trim() !== '') {
+                    imageHtml = `<div class="img-container"><img src="${art.imgUrl}" alt="${art.titleZh}"></div>`;
+                } else {
+                    imageHtml = `
+                        <div class="img-container">
+                            <div class="img-placeholder">
+                                🖼️ <strong>圖片位置預留區 (Image URL Reserved)</strong><br>
+                                <small>待輸入連結：${art.titleEn}</small>
+                            </div>
+                        </div>`;
+                }
 
                 card.innerHTML = `
                     <div class="card-header">
-                        <span class="badge">NO. ${art.id}</span>
-                        <span class="artist-name">${art.artist}</span>
+                        <div>
+                            <span class="badge-id">NO. ${art.id}</span>
+                            <span class="zone-tag">${art.zoneName}</span>
+                        </div>
+                        <span class="year-tag">${art.year}</span>
                     </div>
+
+                    ${imageHtml}
+
                     <div class="card-body">
+                        <div class="artist-title">${art.artist}</div>
                         <h2 class="title-zh">${art.titleZh}</h2>
                         <div class="title-en">${art.titleEn}</div>
-                        
-                        <div class="section-box">
-                            <span class="section-label">【作者背景】</span> ${art.bg}
-                        </div>
-                        <div class="section-box">
-                            <span class="section-label">【歷史故事與趣聞】</span> ${art.story}
-                        </div>
-                        <div class="section-box">
-                            <span class="section-label">【藝術影響與地位】</span> ${art.impact}
+
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">【作者簡介】</span>
+                                <div>${art.bio}</div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">【創作技巧與解析】</span>
+                                <div>${art.tech}</div>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">【美術史地位】</span>
+                                <div>${art.status}</div>
+                            </div>
+                            <div class="detail-item story-item">
+                                <span class="detail-label">【作品故事與趣聞】</span>
+                                <div>${art.story}</div>
+                            </div>
+                            <div class="detail-item impact-item">
+                                <span class="detail-label">【受之前影響】</span>
+                                <div>${art.prior}</div>
+                            </div>
+                            <div class="detail-item impact-item">
+                                <span class="detail-label">【對之後影響】</span>
+                                <div>${art.later}</div>
+                            </div>
                         </div>
 
                         <div class="controls">
-                            <button class="btn btn-play" onclick="playCantonese('${art.titleZh}', '${art.cantoneseAudio}')">
-                                🔊 廣東話導賞
+                            <button class="btn btn-play" onclick="playCantonese('${art.id}', '${art.titleZh}', '${art.bio}', '${art.story}', '${art.status}')">
+                                🔊 廣東話語音導賞
                             </button>
-                            <a href="${art.url}" target="_blank" class="btn btn-link">
-                                🔗 官方藏品網頁
-                            </a>
                         </div>
                     </div>
                 `;
@@ -447,7 +1391,7 @@
             });
         }
 
-        // 🎯 快速跳轉 (Jump to selected artwork)
+        // 🎯 快速跳轉 (Jump to Artwork)
         function jumpToArtwork(elementId) {
             if (!elementId) return;
             const target = document.getElementById(elementId);
@@ -456,15 +1400,21 @@
             }
         }
 
-        // 🔍 即時搜尋過濾功能 (Search Filter)
+        // 🔍 展區篩選與關鍵字搜尋組合功能 (Filter & Search)
         function filterArtworks() {
+            const selectedZone = document.getElementById('zoneFilter').value;
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const cards = document.querySelectorAll('.artwork-card');
             let visibleCount = 0;
 
             cards.forEach(card => {
+                const cardZone = card.getAttribute('data-zone');
                 const searchData = card.getAttribute('data-search');
-                if (searchData.includes(query)) {
+
+                const matchesZone = (selectedZone === 'ALL' || cardZone === selectedZone);
+                const matchesQuery = (query === '' || searchData.includes(query));
+
+                if (matchesZone && matchesQuery) {
                     card.style.display = 'block';
                     visibleCount++;
                 } else {
@@ -475,24 +1425,26 @@
             document.getElementById('noResults').style.display = (visibleCount === 0) ? 'block' : 'none';
         }
 
-        // 🗣️ 廣東話語音合成核心 (Cantonese Web Speech API)
+        // 🗣️ 廣東話語音朗讀核心 (Cantonese Web Speech API)
         const synth = window.speechSynthesis;
         const statusEl = document.getElementById('player-status');
 
-        function playCantonese(title, text) {
+        function playCantonese(id, title, bio, story, status) {
             if (!('speechSynthesis' in window)) {
                 alert('抱歉，您嘅瀏覽器唔支援語音播放功能。');
                 return;
             }
 
-            // 停止當前語音
-            synth.cancel();
+            synth.cancel(); // 停止先前的語音
 
-            const utterance = new SpeechSynthesisUtterance(`${title}。${text}`);
+            // 構建流暢廣東話朗讀文稿
+            const textToSpeech = `作品編號${id}，${title}。${bio}。故事背景：${story}。美術史地位：${status}。`;
+
+            const utterance = new SpeechSynthesisUtterance(textToSpeech);
             utterance.lang = 'zh-HK'; // 指定廣東話 / 香港粵語
-            utterance.rate = 0.7;    // 調校自然語速
+            utterance.rate = 0.7;    // 設定舒適語速
 
-            // 優先選用系統廣東話 Voice (如 Siri 粵語 / Google 粵語)
+            // 優先挑選廣東話 Voice
             const voices = synth.getVoices();
             const hkVoice = voices.find(v => v.lang === 'zh-HK' || v.lang === 'zh-GZ' || v.lang.includes('yue'));
             if (hkVoice) {
@@ -500,7 +1452,7 @@
             }
 
             utterance.onstart = () => {
-                statusEl.innerText = `▶️ 正在播放廣東話導賞：${title}`;
+                statusEl.innerText = `▶️ 正在播放 NO.${id}：${title}`;
             };
 
             utterance.onend = () => {
@@ -519,7 +1471,7 @@
             statusEl.innerText = '⏹️ 導賞已停止播放';
         }
 
-        // 頁面載入完成後初始化
+        // 頁面載入完成後初始化渲染
         window.onload = renderApp;
     </script>
 </body>
