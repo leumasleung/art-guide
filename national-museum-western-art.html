@@ -1376,7 +1376,8 @@
             const utterance = new SpeechSynthesisUtterance(textToSpeech);
             utterance.lang = 'zh-HK'; // 指定廣東話 / 香港粵語
             utterance.rate = 0.92;    // 保留您的語速設定
-            utterance.pitch = 1;    // 保留您的音高設定
+            utterance.pitch = 0.99;    // 保留您的音高設定
+            utterance.volume = 0.8    // 音量
 
             // 自動套用最適 Voice
             const bestVoice = getBestCantoneseVoice();
