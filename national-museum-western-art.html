@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國立西洋美術館 - 14-16世紀名畫語音導覽</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --primary-color: #2c3e50;
+            --accent-color: #c0392b;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --border-color: #eeeeee;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 24px 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 6px 0 0 0;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .artwork-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .artwork-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background-color: #eaedd1;
+            display: block;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .artist {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            margin: 0 0 8px 0;
+            color: var(--primary-color);
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-play {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-play:hover {
+            background-color: #1a252f;
+        }
+
+        .btn-stop {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-link {
+            background-color: #edf2f7;
+            color: #4a5568;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        /* 底部固定控制列 */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .player-info {
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 60%;
+        }
+
+        .player-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>國立西洋美術館語音導覽</h1>
+        <p>14 – 16 世紀：後哥德 / 文藝復興 / 風格主義</p>
+    </header>
+
+    <div class="container" id="artwork-list">
+        <!-- 畫作卡片將由 JavaScript 自動生成 -->
+    </div>
+
+    <!-- 底部全域語音控制列 -->
+    <div class="player-bar" id="player-bar">
+        <div class="player-info" id="player-status">準備播放導覽...</div>
+        <button class="player-btn" onclick="stopSpeech()">停止朗讀</button>
+    </div>
+
+    <script>
+        // 畫作資料庫
+        const artworks = [
+            {
+                id: 1,
+                title: "基督升天與空寶座聖像畫",
+                artist: "安德烈亞斯·里佐斯 (Andreas Ritzos)",
+                img: "https://artsandculture.google.com/asset/icon-ascension-of-christ-with-the-hetoimasia/8QEY3ghX5b5vDA",
+                link: "https://artsandculture.google.com/asset/icon-ascension-of-christ-with-the-hetoimasia/8QEY3ghX5b5vDA",
+                guideText: "這幅作品由15世紀著名克里特畫派大師安德烈亞斯·里佐斯創作。畫作中央描繪基督升天與象徵上帝的空寶座。右下方聖塞巴斯蒂安腳下有希臘文親筆簽名，是拜占庭晚期保存最完好的聖像畫代表作。"
+            },
+            {
+                id: 2,
+                title: "聖斯德望傳奇圖祭壇座畫",
+                artist: "馬里奧托·迪·納爾多 (Mariotto di Nardo)",
+                img: "https://artsandculture.google.com/asset/predella-panel-representing-the-legend-of-st-stephen-mariotto-di-nardo/EAF-uH-G_6i3ew",
+                link: "https://artsandculture.google.com/asset/predella-panel-representing-the-legend-of-st-stephen-mariotto-di-nardo/EAF-uH-G_6i3ew",
+                guideText: "這幅畫原為大型三聯祭壇畫底座的一部分。畫面如連環畫般描繪基督教第一位殉道者聖斯德望的生平，以及遺體運送時惡魔攪動大海的傳奇故事，展現哥德晚期鮮豔的蛋彩畫風格。"
+            },
+            {
+                id: 3,
+                title: "基督受難與跪拜的贊助者夫婦三聯畫",
+                artist: "尤斯·凡·克萊夫 (Joos van Cleve)",
+                img: "https://artsandculture.google.com/asset/triptych-the-crucifixion-flanked-by-the-kneeling-donor-and-his-wife-joos-van-cleve/gQGfA77iF2z-mQ",
+                link: "https://artsandculture.google.com/asset/triptych-the-crucifixion-flanked-by-the-kneeling-donor-and-his-wife-joos-van-cleve/gQGfA77iF2z-mQ",
+                guideText: "這是北方文藝復興油畫細緻技術的典範。三聯畫兩側羽翼細緻刻畫了出資製作此畫的贊助者夫婦，展示了畫家對布料質感、人像細節及背景風景的嚴謹描繪。"
+            },
+            {
+                id: 4,
+                title: "客西馬尼園的禱告",
+                artist: "老盧卡斯·克拉納赫 (Lucas Cranach, the Elder)",
+                img: "https://artsandculture.google.com/asset/the-garden-of-gethsemane-lucas-cranach-the-elder/cAEGvBy4bA3hqw",
+                link: "https://artsandculture.google.com/asset/the-garden-of-gethsemane-lucas-cranach-the-elder/cAEGvBy4bA3hqw",
+                guideText: "作者是馬丁路德的好友克拉納赫。作品描繪基督在被捕前夕於客西馬尼園進行最後禱告。畫家擅長將戲劇性的宗教情節融入德國特有的黑森林風景之中，線條極具特色。"
+            },
+            {
+                id: 5,
+                title: "聖凱瑟琳的神秘婚禮",
+                artist: "保羅·委羅內塞 (Paolo Veronese)",
+                img: "https://artsandculture.google.com/asset/the-mystic-marriage-of-st-catherine/CwGX8R7QywPwVQ",
+                link: "https://artsandculture.google.com/asset/the-mystic-marriage-of-st-catherine/CwGX8R7QywPwVQ",
+                guideText: "威尼斯畫派大師委羅內塞的早期傑作。畫作左上方隱藏了貴族家族徽章，推測是為了紀念1547年維羅納兩大名門聯姻而訂製。體現了威尼斯畫派在光影與豐富色彩運用上的高超成就。"
+            },
+            {
+                id: 6,
+                title: "扮成大衛的青年肖像",
+                artist: "丁托列托 (Tintoretto)",
+                img: "https://artsandculture.google.com/asset/portrait-of-a-young-man-as-david/LAHU_NvON6E2hQ",
+                link: "https://artsandculture.google.com/asset/portrait-of-a-young-man-as-david/LAHU_NvON6E2hQ",
+                guideText: "畫中青年化身為聖經英雄大衛，左後方可看到被斬首的巨人歌利亞。藝術史學家肯尼斯·克拉克曾盛讚其背景筆觸充滿躍動感，是風格主義結合肖像與歷史畫的經典之作。"
+            },
+            {
+                id: 7,
+                title: "客西馬尼園的禱告",
+                artist: "喬爾喬·瓦薩里 (Giorgio Vasari)",
+                img: "https://artsandculture.google.com/asset/the-garden-of-gethsemane-giorgio-vasari/kQF0vC6R9EagpA",
+                link: "https://artsandculture.google.com/asset/the-garden-of-gethsemane-giorgio-vasari/kQF0vC6R9EagpA",
+                guideText: "瓦薩里被譽為「藝術史之父」。除了寫書，他也是風格主義繪畫的核心推手。此作呈現出極具戲劇張力的人物姿態與拉長扭曲的線條，展示文藝復興晚期對動態構圖的追求。"
+            },
+            {
+                id: 8,
+                title: "背負十字架的基督",
+                artist: "約阿希姆·布克拉爾 (Joachim Beuckelaer)",
+                img: "https://artsandculture.google.com/asset/christ-carrying-the-cross-joachim-beuckelaer/XAGY15O6C_89Xw",
+                link: "https://artsandculture.google.com/asset/christ-carrying-the-cross-joachim-beuckelaer/XAGY15O6C_89Xw",
+                guideText: "布克拉爾開創了將宗教主題隱藏於日常市場前景之後的手法。前景充斥著世俗的人物與食材，背景才是艱難背負十字架的基督，對後世荷蘭風俗畫影響深遠。"
+            },
+            {
+                id: 9,
+                title: "最後的晚餐",
+                artist: "馬騰·德·沃斯 (Marten de Vos)",
+                img: "https://artsandculture.google.com/asset/the-last-supper-marten-de-vos/YwEW6j2Y4-J7oA",
+                link: "https://artsandculture.google.com/asset/the-last-supper-marten-de-vos/YwEW6j2Y4-J7oA",
+                guideText: "不同於達芬奇平面的構圖，德·沃斯採用風格主義特有的對角線構圖與劇場般擺設，強調門徒們在得知叛徒時的驚恐與情緒，體現反宗教改革時期的藝術變革。"
+            },
+            {
+                id: 10,
+                title: "亞伯拉罕與以撒的樹林風景",
+                artist: "老揚·勃魯蓋爾 (Jan Brueghel, the Elder)",
+                img: "https://artsandculture.google.com/asset/wooded-landscape-with-abraham-and-isaac-jan-brueghel-the-elder/gAEAn9sY1S8Jfg",
+                link: "https://artsandculture.google.com/asset/wooded-landscape-with-abraham-and-isaac-jan-brueghel-the-elder/gAEAn9sY1S8Jfg",
+                guideText: "被譽為「絲絨勃魯蓋爾」的傑作。表面上看似廣袤寧靜的森林風景畫，仔細觀察會發現亞伯拉罕與以撒的微小身影融入自然中，是獨立風景畫發展史上的重要里程碑。"
+            }
+        ];
+
+        // 渲染畫作列表
+        const container = document.getElementById('artwork-list');
+        
+        artworks.forEach(art => {
+            const card = document.createElement('div');
+            card.className = 'artwork-card';
+            card.innerHTML = `
+                <div class="card-content">
+                    <div class="artist">${art.artist}</div>
+                    <h2 class="title">${art.id}. ${art.title}</h2>
+                    <p class="description">${art.guideText}</p>
+                    <div class="controls">
+                        <button class="btn btn-play" onclick="playSpeech('${art.title}', '${art.guideText}')">
+                            🔊 播放語音
+                        </button>
+                        <a href="${art.link}" target="_blank" class="btn btn-link">
+                            🖼️ 檢視名畫
+                        </a>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // 語音播放核心邏輯
+        const synth = window.speechSynthesis;
+        const statusEl = document.getElementById('player-status');
+
+        function playSpeech(title, text) {
+            // 先停止先前的語音
+            synth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(`${title}。${text}`);
+            utterance.lang = 'zh-TW'; // 設定語系為中文
+            utterance.rate = 0.95;    // 語速稍微放慢，增加質感
+
+            utterance.onstart = () => {
+                statusEl.innerText = `正在播放：${title}`;
+            };
+
+            utterance.onend = () => {
+                statusEl.innerText = '播放完畢';
+            };
+
+            utterance.onerror = () => {
+                statusEl.innerText = '語音播放發生錯誤';
+            };
+
+            synth.speak(utterance);
+        }
+
+        function stopSpeech() {
+            synth.cancel();
+            statusEl.innerText = '朗讀已停止';
+        }
+    </script>
+</body>
+</html>
