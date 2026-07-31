@@ -1305,7 +1305,7 @@
         }
 
         // ----------------------------------------------------
-        // 🗣️ 智慧廣東話語音選擇與朗讀 (Web Speech API)
+        // 🗣️ 智慧廣東話語音選擇與朗讀 (Web Speech API) - iOS 終極修復版
         // ----------------------------------------------------
         const synth = window.speechSynthesis;
         const statusEl = document.getElementById('player-status');
@@ -1323,51 +1323,40 @@
             }
         }
 
-        // 2. 智慧搜尋：iOS Apple 最佳語音 (Wing詠 / Sin-Ji善知 / Sin-Yi善怡 / Siri / 優質版) -> 系統預設 -> Android Google 粵語 -> 備用
+        // 2. 智慧搜尋：iOS 容錯放權機制 -> Android Google 粵語 -> 備用
         function getBestCantoneseVoice() {
             if (availableVoices.length === 0 && 'speechSynthesis' in window) {
                 availableVoices = synth.getVoices();
             }
-        
+
             if (availableVoices.length === 0) return null;
-        
+
             // 篩選所有廣東話語音 (zh-HK, zh-GZ, yue)
             const cantoneseVoices = availableVoices.filter(v => {
-                const lang = v.lang.toLowerCase().replace('_', '-');
+                // 加入容錯，避免 v.lang 為 undefined 報錯
+                const lang = (v.lang || '').toLowerCase().replace('_', '-');
                 return lang.includes('zh-hk') || lang.includes('zh-gz') || lang.includes('yue');
             });
-        
+
             if (cantoneseVoices.length === 0) return null;
-        
-            // 【優先 1】Apple 高音質語音 (精確匹配 Wing 詠 / Sin-Ji 善知 / Sin-Yi 善怡 / Siri / Enhanced / 優質)
-            const appleHighQuality = cantoneseVoices.find(v => {
-                const name = v.name.toLowerCase();
-                return name.includes('wing') || 
-                       name.includes('詠') || 
-                       name.includes('sin-ji') || 
-                       name.includes('sinji') || 
-                       name.includes('sin-yi') || 
-                       name.includes('sinyi') || 
-                       name.includes('善怡') || 
-                       name.includes('siri') || 
-                       name.includes('enhanced') || 
-                       name.includes('premium') || 
-                       name.includes('優質');
-            });
-            if (appleHighQuality) return appleHighQuality;
-        
-            // 【優先 2】使用者喺 iPhone 設定選用嘅系統預設語音 (System Default)
-            const systemDefault = cantoneseVoices.find(v => v.default === true);
-            if (systemDefault) return systemDefault;
-        
-            // 【優先 3】Android / Windows Google 廣東話 (Google 粵語)
+
+            // 【優先 1】尋找 Android / Windows 上的 Google 廣東話
             const googleVoice = cantoneseVoices.find(v => {
                 const name = v.name.toLowerCase();
                 return name.includes('google') || name.includes('粵語');
             });
             if (googleVoice) return googleVoice;
-        
-            // 【優先 4】備用：第一個搜尋到的廣東話 Voice
+
+            // 【優先 2】尋找 Apple 內部代號 (不強制寫死中文名，避免 iOS Safari 當機)
+            const appleVoice = cantoneseVoices.find(v => {
+                const name = v.name.toLowerCase();
+                return name.includes('sin-ji') || name.includes('sinji') || 
+                       name.includes('enhanced') || name.includes('premium') || 
+                       name.includes('siri');
+            });
+            if (appleVoice) return appleVoice;
+
+            // 【優先 3】回傳第一個找到的廣東話 Voice
             return cantoneseVoices[0];
         }
 
@@ -1384,26 +1373,37 @@
             const textToSpeech = `作品編號${id}，${title}。${bio}。作品故事：${story}。賞析建議：${guide}`;
 
             const utterance = new SpeechSynthesisUtterance(textToSpeech);
-            utterance.lang = 'zh-HK'; // 指定廣東話 / 香港粵語
-            utterance.rate = 0.9;    // 保留您的語速設定
-            utterance.pitch = 0.98;    // 保留您的音高設定
-            utterance.volume = 0.8    // 音量
+            
+            // 關鍵設定：強制綁定香港廣東話 BCP-47 標籤
+            utterance.lang = 'zh-HK'; 
+            
+            // 保留您專屬的聲音設定
+            utterance.rate = 0.9;    
+            utterance.pitch = 0.98;  
+            utterance.volume = 0.8;  
 
             // 自動套用最適 Voice
             const bestVoice = getBestCantoneseVoice();
+            
+            // 【核心修復】只有當確定找到有效 Voice 時才指定；
+            // 在 iOS Safari 上若找不到完全匹配的物件，直接交由 iOS 系統預設（即您設定的善怡）發聲！
             if (bestVoice) {
                 utterance.voice = bestVoice;
             }
 
+            // 取得目前運行的語音名稱 (除錯與顯示用)
+            const voiceDisplayName = bestVoice ? bestVoice.name : 'iOS 系統預設 (善怡)';
+
             utterance.onstart = () => {
-                statusEl.innerText = `▶️ 正在播放 NO.${id}：${title}`;
+                statusEl.innerText = `▶️ 正在播放 NO.${id}：${title} (${voiceDisplayName})`;
             };
 
             utterance.onend = () => {
                 statusEl.innerText = '⏹️ 導賞播放完畢';
             };
 
-            utterance.onerror = () => {
+            utterance.onerror = (e) => {
+                console.error("Speech Error:", e);
                 statusEl.innerText = '❌ 語音播放發生錯誤';
             };
 
