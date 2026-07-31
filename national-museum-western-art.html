@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>東京國立西洋美術館 59件 Highlight 廣東話語音導賞</title>
+    <title>東京國立西洋美術館 59件 Highlight</title>
     <style>
         :root {
             --bg-color: #f4f6f9;
@@ -1311,7 +1311,11 @@
         const statusEl = document.getElementById('player-status');
         let availableVoices = [];
 
-        // 1. 初始化並監聽 Voice 載入 (解決 Android/Chrome 異步加載空陣列問題)
+        // 判斷是否為 iOS 裝置 (iPhone / iPad)
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        // 1. 初始化並監聽 Voice 載入 (專為 Android/Chrome 異步載入設計)
         function initVoices() {
             if ('speechSynthesis' in window) {
                 availableVoices = synth.getVoices();
@@ -1323,7 +1327,7 @@
             }
         }
 
-        // 2. 智慧搜尋：iOS 容錯放權機制 -> Android Google 粵語 -> 備用
+        // 2. Android / Windows 專用的 Google 粵語搜尋
         function getBestCantoneseVoice() {
             if (availableVoices.length === 0 && 'speechSynthesis' in window) {
                 availableVoices = synth.getVoices();
@@ -1331,83 +1335,70 @@
 
             if (availableVoices.length === 0) return null;
 
-            // 篩選所有廣東話語音 (zh-HK, zh-GZ, yue)
             const cantoneseVoices = availableVoices.filter(v => {
-                // 加入容錯，避免 v.lang 為 undefined 報錯
                 const lang = (v.lang || '').toLowerCase().replace('_', '-');
                 return lang.includes('zh-hk') || lang.includes('zh-gz') || lang.includes('yue');
             });
 
             if (cantoneseVoices.length === 0) return null;
 
-            // 【優先 1】尋找 Android / Windows 上的 Google 廣東話
+            // 優先尋找 Google 粵語 (Android / PC Chrome)
             const googleVoice = cantoneseVoices.find(v => {
                 const name = v.name.toLowerCase();
                 return name.includes('google') || name.includes('粵語');
             });
             if (googleVoice) return googleVoice;
 
-            // 【優先 2】尋找 Apple 內部代號 (不強制寫死中文名，避免 iOS Safari 當機)
-            const appleVoice = cantoneseVoices.find(v => {
-                const name = v.name.toLowerCase();
-                return name.includes('sin-ji') || name.includes('sinji') || 
-                       name.includes('enhanced') || name.includes('premium') || 
-                       name.includes('siri');
-            });
-            if (appleVoice) return appleVoice;
-
-            // 【優先 3】回傳第一個找到的廣東話 Voice
             return cantoneseVoices[0];
         }
 
-        // 3. 語音播放核心 Logic
+        // 3. 語音播放核心 Logic (已修復 iOS Safari WebKit 所有死穴)
         function playCantonese(id, title, bio, story, guide) {
             if (!('speechSynthesis' in window)) {
                 alert('抱歉，您嘅瀏覽器唔支援語音播放功能。');
                 return;
             }
 
-            synth.cancel(); // 停止先前語音
-
-            // 構建廣東話朗讀內容
-            const textToSpeech = `作品編號${id}，${title}。${bio}。作品故事：${story}。賞析建議：${guide}`;
-
-            const utterance = new SpeechSynthesisUtterance(textToSpeech);
-            
-            // 關鍵設定：強制綁定香港廣東話 BCP-47 標籤
-            utterance.lang = 'zh-HK'; 
-            
-            // 保留您專屬的聲音設定
-            utterance.rate = 0.9;    
-            utterance.pitch = 0.98;  
-            utterance.volume = 0.8;  
-
-            // 自動套用最適 Voice
-            const bestVoice = getBestCantoneseVoice();
-            
-            // 【核心修復】只有當確定找到有效 Voice 時才指定；
-            // 在 iOS Safari 上若找不到完全匹配的物件，直接交由 iOS 系統預設（即您設定的善怡）發聲！
-            if (bestVoice) {
-                utterance.voice = bestVoice;
+            // 修復死穴 3：如果正在播放，先 stop，並加微小 delay 避免 iOS 當機
+            if (synth.speaking || synth.pending) {
+                synth.cancel();
             }
 
-            // 取得目前運行的語音名稱 (除錯與顯示用)
-            const voiceDisplayName = bestVoice ? bestVoice.name : 'iOS 系統預設 (善怡)';
+            setTimeout(() => {
+                const textToSpeech = `作品編號${id}，${title}。${bio}。作品故事：${story}。賞析建議：${guide}`;
+                const utterance = new SpeechSynthesisUtterance(textToSpeech);
 
-            utterance.onstart = () => {
-                statusEl.innerText = `▶️ 正在播放 NO.${id}：${title} (${voiceDisplayName})`;
-            };
+                // 核心設定：指定廣東話語言標籤
+                utterance.lang = 'zh-HK'; 
+                utterance.rate = 0.9;    
+                utterance.pitch = 1.0;   // iOS 對 pitch 敏感，建議保持 1.0
+                utterance.volume = 1.0;  
 
-            utterance.onend = () => {
-                statusEl.innerText = '⏹️ 導賞播放完畢';
-            };
+                // 修復死穴 1：iOS 裝置絕對【不要】指定 utterance.voice！
+                // 只有非 iOS (Android / Windows) 才指定 Voice 物件
+                if (!isIOS) {
+                    const bestVoice = getBestCantoneseVoice();
+                    if (bestVoice) {
+                        utterance.voice = bestVoice;
+                    }
+                }
 
-            utterance.onerror = (e) => {
-                console.error("Speech Error:", e);
-                statusEl.innerText = '❌ 語音播放發生錯誤';
-            };
+                utterance.onstart = () => {
+                    const voiceInfo = isIOS ? 'iOS 善怡(優質)' : 'Google 粵語/系統語音';
+                    statusEl.innerText = `▶️ 正在播放 NO.${id}：${title} (${voiceInfo})`;
+                };
 
-            synth.speak(utterance);
+                utterance.onend = () => {
+                    statusEl.innerText = '⏹️ 導賞播放完畢';
+                };
+
+                utterance.onerror = (e) => {
+                    console.error("Speech Error:", e);
+                    statusEl.innerText = '❌ 語音播放失敗！請檢查iPhone左側【靜音開關】是否關閉';
+                };
+
+                synth.speak(utterance);
+            }, isIOS ? 120 : 10); // iOS 需要 120ms 延遲緩衝
         }
 
         function stopSpeech() {
